@@ -1,43 +1,31 @@
 <div class="flex flex-wrap">
-  <available-controls />
+  <app-available-controls />
 
-  <div
-    class="drop-area flex flex-wrap"
-    cdkDropList
-    id="dropArea"
-    [cdkDropListData]="layoutConfig()"
-    [cdkDropListConnectedTo]="[]"
-    cdkDropListOrientation="mixed"
-    (cdkDropListDropped)="drop($event)">
+  <div class="drop-area flex flex-wrap" cdkDropList id="dropArea" [cdkDropListData]="layoutConfig()"
+    [cdkDropListConnectedTo]="[]" cdkDropListOrientation="mixed" (cdkDropListDropped)="drop($event)">
     @for (item of layoutConfig(); track item.id) {
-      <div
-        cdkDrag
-        class="relative mb-2 p-4"
-        [ngStyle]="{
+    <div cdkDrag class="relative mb-2 p-4" [ngStyle]="{
           width: item.style.width,
           backgroundColor: item.style.backgroundColor,
-        }"
-        mwlResizable
-        (click)="onEditControl(item)"
-        [enableGhostResize]="true">
-        <button class="bg-blue-500 text-white font-bold px-2 mx-1 rounded" (click)="increaseWidth($event, item.id, 2)">
-          +
-        </button>
-        <button class="bg-blue-500 text-white font-bold px-2 mx-1 rounded" (click)="decreaseWidth($event, item.id, 2)">
-          -
-        </button>
-        <div class="placeholder" [ngStyle]="{ width: item.style.width }" *cdkDragPlaceholder></div>
-        {{ item.name }}
-        <button (click)="remove($event, item.id)" class="remove-button">x</button>
-      </div>
+        }" mwlResizable (click)="onEditControl(item)" [enableGhostResize]="true">
+      <button class="bg-blue-500 text-white font-bold px-2 mx-1 rounded" (click)="increaseWidth($event, item.id, 2)">
+        +
+      </button>
+      <button class="bg-blue-500 text-white font-bold px-2 mx-1 rounded" (click)="decreaseWidth($event, item.id, 2)">
+        -
+      </button>
+      <div class="placeholder" [ngStyle]="{ width: item.style.width }" *cdkDragPlaceholder></div>
+      {{ item.name }}
+      <button (click)="remove($event, item.id)" class="remove-button">x</button>
+    </div>
     } @empty {
-      <empty-area />
+    <app-empty-area />
     }
   </div>
 
   @if (selectedItem()) {
-    <div id="rightSidebar" class="w-64 p-4 bg-gray-100 border-l">
-      <control-editor [selectedItem]="selectedItem" (layoutConfigChange)="onConfigurationChanged($event)" />
-    </div>
+  <div id="rightSidebar" class="w-64 p-4 bg-gray-100 border-l">
+    <app-control-editor [selectedItem]="selectedItem" (layoutConfigChange)="onConfigurationChanged($event)" />
+  </div>
   }
 </div>

@@ -11,8 +11,6 @@ import { ValidationMessageComponent } from '../../../components/validation-messa
 export class BasicComponent implements OnInit {
   public form!: FormGroup;
 
-  constructor() {}
-
   ngOnInit(): void {
     // Initialize the form with default values
     this.form = new FormGroup({

@@ -2,11 +2,11 @@ import { Component, DestroyRef, inject, signal, OnInit, OnDestroy } from '@angul
 import { UsersService } from './services/users.service';
 import { User } from './models/user.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RouterLink, RouterModule } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { TodosService } from './services/todos.service';
 import { Todo } from './models/todo.model';
 import { AbstractComponent } from '../../abstractions';
-import { catchError, defer, EMPTY, first, Subscription, switchMap } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-data-provider',

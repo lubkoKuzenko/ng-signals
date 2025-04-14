@@ -4,6 +4,7 @@ import { AbstractControl } from '@angular/forms';
 import { FormatErrorMessagePipe } from './format-error-message.pipe';
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'bb-validation-message',
   imports: [KeyValuePipe, FormatErrorMessagePipe],
   styleUrls: ['validation-message.component.scss'],
@@ -14,7 +15,7 @@ export class ValidationMessageComponent {
   @Input({ required: true })
   public control!: AbstractControl;
 
-  get errors(): Record<string, any> {
+  get errors(): Record<string, unknown> {
     return this.control.errors || {};
   }
 }

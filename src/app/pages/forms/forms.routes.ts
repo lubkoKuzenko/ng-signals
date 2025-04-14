@@ -5,6 +5,7 @@ import { NestedComponent } from './nested/nested.component';
 import { DynamicComponent } from './dynamic/dynamic.component';
 import { Dynamic2Component } from './dynamic-2/dynamic-2.component';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const formFieldsData: any[] = [
   {
     uniqueId: 1,

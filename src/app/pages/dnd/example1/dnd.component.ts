@@ -26,6 +26,7 @@ export class DndComponent {
     { type: 'button', icon: '🔘', data: { type: 'button' } },
   ];
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   layouts: any[] = [];
 
   onDropLayout(event: DndDropEvent, dropIndex: number | null = null) {

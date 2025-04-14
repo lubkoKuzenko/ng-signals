@@ -19,7 +19,8 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 
-import { ResizableModule, ResizeEvent } from 'angular-resizable-element';
+import { ResizableModule } from 'angular-resizable-element';
+import { IGridItem } from './grid.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,6 +30,7 @@ import { ResizableModule, ResizeEvent } from 'angular-resizable-element';
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   @ViewChildren('gridItem') gridItemsRef!: QueryList<ElementRef>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   gridItems: any[] = [];
 
   backgroundColors = [
@@ -90,7 +92,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     });
   }
 
-  drop(event: CdkDragDrop<any, any>) {
+  drop(event: CdkDragDrop<IGridItem[], IGridItem[]>) {
     const { previousContainer, container } = event;
     console.log(previousContainer.data, container.data);
     if (previousContainer === container) {
@@ -101,7 +103,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.updateWidgetPositions(previousContainer, container);
   }
 
-  updateWidgetPositions(previousContainer: CdkDropList<any>, container: CdkDropList<any>) {
+  updateWidgetPositions(previousContainer: CdkDropList<IGridItem[]>, container: CdkDropList<IGridItem[]>) {
     // find the index of previous container data and target container data inside gridItems.
     const prevIndex = this.gridItems.findIndex(item => item === previousContainer.data);
     const currentIndexGrid = this.gridItems.findIndex(item => item === container.data);
@@ -147,7 +149,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       });
     });
   }
-  logItem(item: any) {
+  logItem(item: IGridItem) {
     console.log(item);
     return '';
   }

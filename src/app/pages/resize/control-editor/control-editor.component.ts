@@ -4,7 +4,7 @@ import { LayoutItemConfig } from '../resize.interface';
 import { ValidationMessageComponent } from '../../../components/validation-message';
 
 @Component({
-  selector: 'control-editor',
+  selector: 'app-control-editor',
   imports: [ReactiveFormsModule, ValidationMessageComponent],
   templateUrl: './control-editor.component.html',
   styleUrl: './control-editor.component.scss',

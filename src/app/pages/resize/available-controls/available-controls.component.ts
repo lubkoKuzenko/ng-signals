@@ -4,7 +4,7 @@ import { controls } from '../controls';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'available-controls',
+  selector: 'app-available-controls',
   imports: [CommonModule, DragDropModule, CdkDropList, CdkDrag],
   templateUrl: './available-controls.component.html',
   styleUrl: './available-controls.component.scss',

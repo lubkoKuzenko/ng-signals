@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, Input, signal, OnInit } from '@angular/core';
-import { JsonFormData, JsonFormControls } from './interface';
+import { ChangeDetectionStrategy, Component, inject, signal, OnInit } from '@angular/core';
+import { JsonFormData } from './interface';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ValidationMessageComponent } from '../../../components/validation-message';
