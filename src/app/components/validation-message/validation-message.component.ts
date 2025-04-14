@@ -15,8 +15,7 @@ export class ValidationMessageComponent {
   @Input({ required: true })
   public control!: AbstractControl;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  get errors(): Record<string, any> {
+  get errors() {
     return this.control.errors || {};
   }
 }
