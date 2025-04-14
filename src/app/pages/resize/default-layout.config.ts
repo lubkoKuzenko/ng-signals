@@ -1,7 +1,7 @@
 import * as uuid from 'uuid';
 import { LayoutItemConfig } from './resize.interface';
 
-export const layout: LayoutItemConfig[] = [
+export const initialLayout: LayoutItemConfig[] = [
   {
     id: uuid.v4(),
     name: '1',

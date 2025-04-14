@@ -1,0 +1,9 @@
+@if (open) {
+<div class="confirmation-dialog">
+    <h3>Confirmation</h3>
+    <p>You have unsaved changes. Are you sure you want to leave?</p>
+    <button (click)="onCancel()">Cancel</button>
+    <button (click)="onConfirm()">Confirm</button>
+</div>
+<div class="dialog-overlay"></div>
+}

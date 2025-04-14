@@ -29,3 +29,7 @@
   </div>
   }
 </div>
+
+
+<app-action-confirmation-dialog [open]="(openDialog$ | async) || false" (confirmed)="confirm()"
+  (cancelled)="cancel()" />

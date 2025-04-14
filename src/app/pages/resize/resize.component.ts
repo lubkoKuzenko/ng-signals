@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ResizableModule } from 'angular-resizable-element';
 import {
   CdkDragDrop,
@@ -11,11 +11,17 @@ import {
 } from '@angular/cdk/drag-drop';
 import * as uuid from 'uuid';
 
-import { layout } from './default-layout.config';
+import { initialLayout } from './default-layout.config';
 import { LayoutItemConfig } from './resize.interface';
 import { ControlEditorComponent } from './control-editor/control-editor.component';
 import { EmptyAreaComponent } from './empty-area/empty-area.component';
 import { AvailableControlsComponent } from './available-controls/available-controls.component';
+import { DialogRef, Dialog, DIALOG_DATA, DialogModule } from '@angular/cdk/dialog';
+import { ActionConfirmationDialogComponent } from '../../components/action-confirmation-dialog/action-confirmation-dialog.component';
+import { Observable } from 'rxjs';
+import { ComponentCanDeactivate } from '../../guards/pending-changes.guard';
+import { PendingChangesService } from '../../services/pending-changes.service';
+import { isEqual } from 'lodash';
 
 @Component({
   selector: 'app-resize',
@@ -23,19 +29,36 @@ import { AvailableControlsComponent } from './available-controls/available-contr
     CommonModule,
     DragDropModule,
     ResizableModule,
+    DialogModule,
     CdkDropList,
     CdkDrag,
     CdkDragPlaceholder,
     ControlEditorComponent,
     EmptyAreaComponent,
+    ActionConfirmationDialogComponent,
     AvailableControlsComponent,
+  ],
+  providers: [
+    { provide: DIALOG_DATA, useValue: { some: 'data' } }, // Provide a value
+    { provide: DialogRef, useValue: {} },
   ],
   templateUrl: './resize.component.html',
   styleUrl: './resize.component.scss',
 })
-export class ResizeComponent {
-  layoutConfig = signal<LayoutItemConfig[]>(layout);
+export class ResizeComponent implements ComponentCanDeactivate {
+  dialog = inject(Dialog);
+  pendingChangesService = inject(PendingChangesService);
+  layoutConfig = signal<LayoutItemConfig[]>(initialLayout);
   selectedItem = signal<LayoutItemConfig | null>(null);
+  openDialog$: Observable<boolean> = this.pendingChangesService.askForConfirmation$;
+
+  private initialLayoutSnapshot = [...initialLayout];
+  canDeactivate(): boolean {
+    const currentLayout = this.layoutConfig();
+    const hasChanges = !isEqual(currentLayout, this.initialLayoutSnapshot);
+
+    return !hasChanges;
+  }
 
   increaseWidth(e: MouseEvent, id: string, amount: number) {
     e.stopPropagation();
@@ -120,5 +143,13 @@ export class ResizeComponent {
 
   onConfigurationChanged(newItem: LayoutItemConfig) {
     this.layoutConfig.set(this.layoutConfig().map(item => (item.id === newItem.id ? newItem : item)));
+  }
+
+  confirm(): void {
+    this.pendingChangesService.confirm();
+  }
+
+  cancel(): void {
+    this.pendingChangesService.cancel();
   }
 }
