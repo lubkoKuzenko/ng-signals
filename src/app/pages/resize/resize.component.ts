@@ -108,32 +108,46 @@ export class ResizeComponent implements ComponentCanDeactivate {
 
   remove(e: MouseEvent, id: string) {
     e.stopPropagation();
-    const foundElementIndex = this.layoutConfig().findIndex(item => item.id === id);
-    const selectedElementIndex = this.layoutConfig().findIndex(item => item.id === this.selectedItem()?.id);
 
-    if (foundElementIndex > -1) {
-      this.layoutConfig().splice(foundElementIndex, 1);
-    }
+    this.layoutConfig.update(currentConfig => {
+      const foundElementIndex = currentConfig.findIndex(item => item.id === id);
 
-    // If the removed element was selected, deselect it
-    if (selectedElementIndex === foundElementIndex) {
-      this.selectedItem.set(null);
-    }
+      if (foundElementIndex > -1) {
+        const newConfig = [...currentConfig.slice(0, foundElementIndex), ...currentConfig.slice(foundElementIndex + 1)];
+        return newConfig;
+      }
+      return currentConfig;
+    });
+
+    this.selectedItem.update(currentSelectedItem => {
+      if (currentSelectedItem?.id === id) {
+        return null;
+      }
+      return currentSelectedItem;
+    });
   }
 
   drop(event: CdkDragDrop<LayoutItemConfig[]>) {
     if (event.previousContainer === event.container) {
       // Reordering inside the same container
-      moveItemInArray(this.layoutConfig(), event.previousIndex, event.currentIndex);
+      this.layoutConfig.update((currentConfig: LayoutItemConfig[]) => {
+        const newConfig = [...currentConfig];
+        moveItemInArray(newConfig, event.previousIndex, event.currentIndex);
+        return newConfig;
+      });
     } else {
       // Copy item from sidebar to layoutConfig
       const copiedItem = {
         ...event.previousContainer.data[event.previousIndex],
       };
-      this.layoutConfig().splice(event.currentIndex, 0, {
-        ...copiedItem,
-        id: uuid.v4(),
-      });
+      this.layoutConfig.update((currentConfig: LayoutItemConfig[]) => [
+        ...currentConfig.slice(0, event.currentIndex),
+        {
+          ...copiedItem,
+          id: uuid.v4(),
+        },
+        ...currentConfig.slice(event.currentIndex),
+      ]);
     }
   }
 
