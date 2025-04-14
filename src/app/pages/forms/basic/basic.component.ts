@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ValidationMessageComponent } from '../../../components/validation-message';
 
@@ -8,7 +8,7 @@ import { ValidationMessageComponent } from '../../../components/validation-messa
   templateUrl: './basic.component.html',
   styleUrl: './basic.component.scss',
 })
-export class BasicComponent {
+export class BasicComponent implements OnInit {
   public form!: FormGroup;
 
   constructor() {}

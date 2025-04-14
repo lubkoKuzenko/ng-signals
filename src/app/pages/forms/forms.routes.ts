@@ -62,7 +62,11 @@ export const formsRoutes: Routes = [
     children: [
       { path: 'basic', component: BasicComponent },
       { path: 'nested', component: NestedComponent },
-      { path: 'dynamic', component: DynamicComponent, data: { formFields: formFieldsData } },
+      {
+        path: 'dynamic',
+        component: DynamicComponent,
+        data: { formFields: formFieldsData },
+      },
       { path: 'dynamic-2', component: Dynamic2Component },
       { path: '', redirectTo: 'basic', pathMatch: 'full' },
     ],

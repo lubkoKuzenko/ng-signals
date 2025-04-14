@@ -14,7 +14,7 @@ export class ValidationMessageComponent {
   @Input({ required: true })
   public control!: AbstractControl;
 
-  get errors(): { [key: string]: any } {
+  get errors(): Record<string, any> {
     return this.control.errors || {};
   }
 }

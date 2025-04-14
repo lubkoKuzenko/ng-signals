@@ -1,4 +1,12 @@
-import { ChangeDetectorRef, Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  QueryList,
+  ViewChildren,
+  OnInit,
+  AfterViewInit,
+} from '@angular/core';
 import gridConfig from './grid-config.json';
 import { CommonModule } from '@angular/common';
 import {
@@ -19,7 +27,7 @@ import { ResizableModule, ResizeEvent } from 'angular-resizable-element';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit, AfterViewInit {
   @ViewChildren('gridItem') gridItemsRef!: QueryList<ElementRef>;
   gridItems: any[] = [];
 
@@ -98,7 +106,7 @@ export class DashboardComponent {
     const prevIndex = this.gridItems.findIndex(item => item === previousContainer.data);
     const currentIndexGrid = this.gridItems.findIndex(item => item === container.data);
     // update the gridItems array by creating a new array.
-    let newGridItems = [...this.gridItems];
+    const newGridItems = [...this.gridItems];
     newGridItems[prevIndex] = container.data;
     newGridItems[currentIndexGrid] = previousContainer.data;
     this.gridItems = newGridItems;

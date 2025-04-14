@@ -35,7 +35,10 @@ export class ControlEditorComponent {
   public onSubmit() {
     const { name } = this.form.getRawValue();
 
-    const updatedItem: LayoutItemConfig = { ...this.selectedItem()!, name: name || '' };
+    const updatedItem: LayoutItemConfig = {
+      ...this.selectedItem()!,
+      name: name || '',
+    };
 
     this.layoutConfigChange.emit(updatedItem);
   }

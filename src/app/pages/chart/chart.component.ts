@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { AbstractComponent } from '../../abstractions';
@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './chart.component.html',
   styleUrl: './chart.component.scss',
 })
-export class ChartComponent extends AbstractComponent {
+export class ChartComponent extends AbstractComponent implements OnInit {
   public Highcharts: typeof Highcharts = Highcharts;
   public updateFromInput = false;
   public showChart = true;

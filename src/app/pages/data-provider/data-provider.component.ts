@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal, OnInit, OnDestroy } from '@angular/core';
 import { UsersService } from './services/users.service';
 import { User } from './models/user.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -15,7 +15,7 @@ import { catchError, defer, EMPTY, first, Subscription, switchMap } from 'rxjs';
   templateUrl: './data-provider.component.html',
   styleUrl: './data-provider.component.scss',
 })
-export class DataProviderComponent extends AbstractComponent {
+export class DataProviderComponent extends AbstractComponent implements OnInit, OnDestroy {
   #usersService = inject(UsersService);
   #todosService = inject(TodosService);
   #destroyRef = inject(DestroyRef);

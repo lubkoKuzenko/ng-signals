@@ -8,9 +8,8 @@ describe('Dynamic2Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Dynamic2Component]
-    })
-    .compileComponents();
+      imports: [Dynamic2Component],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(Dynamic2Component);
     component = fixture.componentInstance;

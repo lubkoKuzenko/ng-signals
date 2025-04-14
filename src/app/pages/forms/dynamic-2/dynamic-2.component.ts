@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, Input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, signal, OnInit } from '@angular/core';
 import { JsonFormData, JsonFormControls } from './interface';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -10,7 +10,7 @@ import { ValidationMessageComponent } from '../../../components/validation-messa
   styleUrl: './dynamic-2.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Dynamic2Component {
+export class Dynamic2Component implements OnInit {
   private fb = inject(FormBuilder);
   private http = inject(HttpClient);
 

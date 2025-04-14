@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Store } from './store/store';
 
 @Component({
@@ -7,7 +7,7 @@ import { Store } from './store/store';
   styleUrl: './signal-store.component.scss',
   providers: [Store],
 })
-export class SignalStoreComponent {
+export class SignalStoreComponent implements OnInit {
   store = inject(Store);
 
   ngOnInit() {

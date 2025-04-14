@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AbstractComponent } from '../../../abstractions';
 import { ValidationMessageComponent } from '../../../components/validation-message';
@@ -23,7 +23,7 @@ interface FormField {
   templateUrl: './dynamic.component.html',
   styleUrl: './dynamic.component.scss',
 })
-export class DynamicComponent extends AbstractComponent {
+export class DynamicComponent extends AbstractComponent implements OnInit {
   public formFields: FormField[] = [];
   public dynamicForm: FormGroup = new FormGroup({});
   private fb = inject(FormBuilder);

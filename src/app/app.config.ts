@@ -20,7 +20,7 @@ import { navigationConfig } from './configs';
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
 
-export const NAVIGATION_CONFIG = new InjectionToken<any>('NavigationConfig');
+export const NAVIGATION_CONFIG = new InjectionToken<unknown>('NavigationConfig');
 
 export const appConfig: ApplicationConfig = {
   providers: [

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Book, Movie } from '../interfaces';
+import { Movie } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,7 @@ export class MoviesService {
   constructor(private http: HttpClient) {}
 
   getMovies(): Observable<Movie[]> {
-    return this.http.get<{ results: any[] }>(this.apiUrl).pipe(
+    return this.http.get<{ results: Movie[] }>(this.apiUrl).pipe(
       map(response =>
         response.results.map(movie => ({
           id: movie.id.toString(),

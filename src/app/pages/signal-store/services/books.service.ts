@@ -13,6 +13,7 @@ export class BooksService {
   constructor(private http: HttpClient) {}
 
   getBooks(): Observable<Book[]> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return this.http.get<{ docs: any[] }>(this.apiUrl).pipe(
       map(response =>
         response.docs.map(doc => ({

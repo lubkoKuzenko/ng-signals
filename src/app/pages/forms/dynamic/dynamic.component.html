@@ -1,22 +1,29 @@
 <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
-    <div class="row">
-        <div *ngFor="let field of formFields" [ngClass]="field.props.cssClass">
-            <label [attr.for]="field.uniqueId">{{ field.props.label }}</label>
-            <div [ngSwitch]="field.type">
-                <input *ngSwitchCase="'input'" [type]="'text'" [id]="field.uniqueId" [formControlName]="field.name"
-                    [placeholder]="field.props.placeholder" />
-                <textarea *ngSwitchCase="'textarea'" [id]="field.uniqueId" [formControlName]="field.name"
-                    [placeholder]="field.props.placeholder"></textarea>
-                <ng-container *ngSwitchDefault>
-                    <p>Unsupported field type: {{ field.type }}</p>
-                </ng-container>
-            </div>
-            <div *ngIf="dynamicForm.get(field.name)?.invalid && dynamicForm.get(field.name)?.touched">
-                <div *ngIf="dynamicForm.get(field.name)?.errors?.['required']">
-                    <bb-validation-message [control]="dynamicForm.get(field.name)!"></bb-validation-message>
-                </div>
-            </div>
+  <div class="row">
+    <div *ngFor="let field of formFields" [ngClass]="field.props.cssClass">
+      <label [attr.for]="field.uniqueId">{{ field.props.label }}</label>
+      <div [ngSwitch]="field.type">
+        <input
+          *ngSwitchCase="'input'"
+          [type]="'text'"
+          [id]="field.uniqueId"
+          [formControlName]="field.name"
+          [placeholder]="field.props.placeholder" />
+        <textarea
+          *ngSwitchCase="'textarea'"
+          [id]="field.uniqueId"
+          [formControlName]="field.name"
+          [placeholder]="field.props.placeholder"></textarea>
+        <ng-container *ngSwitchDefault>
+          <p>Unsupported field type: {{ field.type }}</p>
+        </ng-container>
+      </div>
+      <div *ngIf="dynamicForm.get(field.name)?.invalid && dynamicForm.get(field.name)?.touched">
+        <div *ngIf="dynamicForm.get(field.name)?.errors?.['required']">
+          <bb-validation-message [control]="dynamicForm.get(field.name)!"></bb-validation-message>
         </div>
+      </div>
     </div>
-    <button type="submit" [disabled]="dynamicForm.invalid">Submit</button>
+  </div>
+  <button type="submit" [disabled]="dynamicForm.invalid">Submit</button>
 </form>

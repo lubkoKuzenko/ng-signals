@@ -17,7 +17,11 @@ export class DndComponent {
   components = [
     { type: 'layout', icon: '🧱', data: { type: 'layout', zones: [[]] } },
     { type: 'layout', icon: '🧱2', data: { type: 'layout', zones: [[], []] } },
-    { type: 'layout', icon: '🧱3', data: { type: 'layout', zones: [[], [], []] } },
+    {
+      type: 'layout',
+      icon: '🧱3',
+      data: { type: 'layout', zones: [[], [], []] },
+    },
     { type: 'textfield', icon: '📝', data: { type: 'textfield' } },
     { type: 'button', icon: '🔘', data: { type: 'button' } },
   ];

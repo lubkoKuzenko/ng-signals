@@ -104,8 +104,13 @@ export class ResizeComponent {
       moveItemInArray(this.layoutConfig(), event.previousIndex, event.currentIndex);
     } else {
       // Copy item from sidebar to layoutConfig
-      const copiedItem = { ...event.previousContainer.data[event.previousIndex] };
-      this.layoutConfig().splice(event.currentIndex, 0, { ...copiedItem, id: uuid.v4() });
+      const copiedItem = {
+        ...event.previousContainer.data[event.previousIndex],
+      };
+      this.layoutConfig().splice(event.currentIndex, 0, {
+        ...copiedItem,
+        id: uuid.v4(),
+      });
     }
   }
 
