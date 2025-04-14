@@ -1,0 +1,14 @@
+<div class="flex items-center space-x-4">
+  <button
+    class="text-gray-700 dark:text-gray-300"
+    (click)="useLanguage('en')"
+    [ngClass]="{ 'font-bold': translate.currentLang === 'en' }">
+    EN
+  </button>
+  <button
+    class="text-gray-700 dark:text-gray-300"
+    (click)="useLanguage('de')"
+    [ngClass]="{ 'font-bold': translate.currentLang === 'de' }">
+    DE
+  </button>
+</div>

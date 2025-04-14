@@ -1,0 +1,26 @@
+<button class="flex gap-3 text-gray-700 dark:text-gray-300" (click)="toggleTheme()">
+  @if (globalStore.isDarkTheme()) {
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+      <path fill="currentColor" d="M12 20a8 8 0 1 1 0-16 8 8 0 0 1 0 16z" />
+      <path
+        fill="currentColor"
+        d="M12 2L12 4M12 20L12 22M2 12L4 12M20 12L22 12M5.64 5.64L7.05 7.05M18.36 18.36L16.95 16.95M5.64 18.36L7.05 16.95M18.36 5.64L16.95 7.05"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round" />
+    </svg>
+  } @else {
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="w-6 h-6">
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M21.752 15.002A9.71 9.71 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.333.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+    </svg>
+  }
+</button>

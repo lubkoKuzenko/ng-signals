@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="sidebar">
+        @for (component of components; track component) {
+        <div [dndDraggable]="component.data" [dndType]="component.type" [dndEffectAllowed]="'move'"
+            class="component-item">
+            {{ component.icon }} {{ component.type }}
+        </div>
+        }
+    </div>
+
+    <section dndDropzone (dndDrop)="onDropLayout($event, $event.index)" class="drop-area">
+        <div class="dndPlaceholder" dndPlaceholderRef>layout placeholder</div>
+        @for (layout of layouts; track $index; let $layoutIndex = $index ) {
+        <div class="layout-container">
+            <div class="layout-zones">
+                @for (zone of layout.zones; track $index; let $zoneIndex = $index) {
+                <section dndDropzone [dndDropzone]="zone.length === 0 ? ['textfield', 'button']:[]"
+                    (dndDrop)="onDropControl($event, $layoutIndex, $zoneIndex)" class="layout-zone">
+
+                    @for (child of zone; track child) {
+                    <div class="child-item" (click)="onEditControl($layoutIndex, $zoneIndex)">{{ child.type }}</div>
+                    }
+
+                    <div class="dndPlaceholder" dndPlaceholderRef>
+                        zone placeholder
+                    </div>
+                </section>
+                }
+            </div>
+            <button [dndDraggable]="layout" [dndType]="'layout'" [dndEffectAllowed]="'move'" class="move-button">
+                drag
+            </button>
+            <button (click)="removeLayout($layoutIndex)" class="remove-button">
+                x
+            </button>
+        </div>
+        }
+    </section>
+</div>

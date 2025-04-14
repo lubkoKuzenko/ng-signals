@@ -1,0 +1,14 @@
+<article class="flex">
+  @if (loading$ | async) {
+    loading...
+  } @else {
+    @if (showChart) {
+      <highcharts-chart
+        [Highcharts]="Highcharts"
+        [options]="optFromInput"
+        [(update)]="updateFromInput"
+        [oneToOne]="true"
+        (chartInstance)="logChartInstance($event)"></highcharts-chart>
+    }
+  }
+</article>

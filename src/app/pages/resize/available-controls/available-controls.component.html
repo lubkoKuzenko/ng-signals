@@ -1,0 +1,8 @@
+<div id="sidebar" cdkDropList [cdkDropListData]="controls()" [cdkDropListConnectedTo]="['dropArea']">
+    @for (control of controls(); track control.name) {
+    <div cdkDrag [cdkDragData]="control" class="component-item"
+        [ngStyle]="{backgroundColor: control.style.backgroundColor}">
+        {{ control.name }}
+    </div>
+    }
+</div>

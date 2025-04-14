@@ -1,0 +1,123 @@
+.container {
+  display: flex;
+  // height: 100vh;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-right: 1px solid #ccc;
+}
+
+.component-item {
+  background-color: #e0e0e0;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.add-button {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  font-size: 1.2em;
+  color: #ccc; /* Light grey by default */
+  cursor: pointer;
+  opacity: 0; /* Hidden by default */
+  transition:
+    opacity 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+}
+
+.component-item:hover .add-button {
+  opacity: 1; /* Visible on hover */
+  color: #007bff; /* Blue on hover */
+}
+
+.form-area {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  padding: 20px;
+  border: 2px dashed #bbb;
+  margin: 10px;
+  min-height: 200px;
+  background-color: #f9f9f9;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.row-3 {
+  width: calc(100% / 12 * 3); /* Takes 3/12 (25%) of the parent's width */
+}
+
+.row-6 {
+  width: calc(100% / 12 * 6); /* Takes 6/12 (50%) of the parent's width */
+}
+
+.row-9 {
+  width: calc(100% / 12 * 9); /* Takes 9/12 (75%) of the parent's width */
+}
+
+.row-12 {
+  width: 100%; /* Takes 12/12 (100%) of the parent's width */
+}
+
+.drop-area h3 {
+  margin-bottom: 15px;
+}
+
+.row {
+  border: 1px dashed gray;
+  position: relative;
+  padding: 5px;
+}
+
+.remove-button {
+  position: absolute;
+  top: -10px;
+  right: -5px;
+  background-color: #f44336; /* Red background */
+  color: white;
+  border: none;
+  padding: 2px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.move-button {
+  position: absolute;
+  top: -10px; /* Adjust top position for better alignment */
+  right: 25px; /* Adjust right position for better alignment */
+  background-color: #4285f4; /* Use a more standard blue for move */
+  color: white;
+  border: none;
+  padding: 6px 10px; /* Adjust padding for better size */
+  text-align: center;
+  text-decoration: none;
+  display: inline-flex; /* Use flexbox for better alignment */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  font-size: 12px; /* Adjust font size for better fit */
+  cursor: move; /* Use 'move' cursor */
+  border-radius: 4px;
+  transition: background-color 0.3s ease; /* Add transition for smooth hover effect */
+  z-index: 10; /* Ensure it's above other elements */
+}
+
+.remove-button i {
+  margin-right: 5px; /* Add some space between the icon and text */
+}
+
+.remove-button:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+}

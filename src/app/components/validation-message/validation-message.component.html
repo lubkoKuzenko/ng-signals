@@ -1,0 +1,5 @@
+@for (error of errors | keyvalue; track error.key) {
+  @if (control.dirty || control.touched) {
+    <span class="error-message" [innerHTML]="error | formatErrorMessage"></span>
+  }
+}

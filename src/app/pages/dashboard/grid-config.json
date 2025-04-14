@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "backgroundColor": "bg-red-200",
+    "textColor": "text-red-700",
+    "height": "h-32",
+    "colSpan": 1,
+    "text": "Element 1"
+  },
+  {
+    "id": 2,
+    "backgroundColor": "bg-blue-200",
+    "textColor": "text-blue-700",
+    "height": "h-48",
+    "colSpan": 4,
+    "text": "Element 2"
+  },
+  {
+    "id": 3,
+    "backgroundColor": "bg-green-200",
+    "textColor": "text-green-700",
+    "height": "h-24",
+    "colSpan": 1,
+    "text": "Element 3"
+  },
+  {
+    "id": 4,
+    "backgroundColor": "bg-yellow-200",
+    "textColor": "text-yellow-700",
+    "height": "h-40",
+    "colSpan": 1,
+    "text": "Element 4"
+  },
+  {
+    "id": 5,
+    "backgroundColor": "bg-purple-200",
+    "textColor": "text-purple-700",
+    "height": "h-64",
+    "colSpan": 3,
+    "text": "Element 5"
+  },
+  {
+    "id": 6,
+    "backgroundColor": "bg-pink-200",
+    "textColor": "text-pink-700",
+    "height": "h-28",
+    "colSpan": 1,
+    "text": "Element 6"
+  },
+  {
+    "id": 7,
+    "backgroundColor": "bg-indigo-200",
+    "textColor": "text-indigo-700",
+    "height": "h-36",
+    "colSpan": 1,
+    "text": "Element 7"
+  },
+  {
+    "id": 8,
+    "backgroundColor": "bg-gray-200",
+    "textColor": "text-gray-700",
+    "height": "h-56",
+    "colSpan": 2,
+    "text": "Element 8"
+  }
+]

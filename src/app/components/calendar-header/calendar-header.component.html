@@ -1,0 +1,59 @@
+<div class="flex flex-col items-center">
+  <div class="flex justify-center w-full">
+    <div class="flex justify-start w-1/3">
+      <div class="flex space-x-2">
+        <button
+          class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          mwlCalendarPreviousView
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="viewDateChange.next(viewDate)">
+          Previous
+        </button>
+        <button
+          class="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
+          mwlCalendarToday
+          [(viewDate)]="viewDate"
+          (viewDateChange)="viewDateChange.next(viewDate)">
+          Today
+        </button>
+        <button
+          class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          mwlCalendarNextView
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="viewDateChange.next(viewDate)">
+          Next
+        </button>
+      </div>
+    </div>
+    <div class="flex justify-center w-1/3">
+      <h3 class="text-lg font-semibold">
+        {{ viewDate | calendarDate: view + 'ViewTitle' : locale }}
+      </h3>
+    </div>
+    <div class="flex justify-end w-1/3">
+      <div class="flex space-x-2">
+        <button
+          class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          (click)="viewChange.emit(CalendarView.Month)"
+          [class.active]="view === CalendarView.Month ? 'bg-blue-700' : ''">
+          Month
+        </button>
+        <button
+          class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          (click)="viewChange.emit(CalendarView.Week)"
+          [class.active]="view === CalendarView.Week ? 'bg-blue-700' : ''">
+          Week
+        </button>
+        <button
+          class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          (click)="viewChange.emit(CalendarView.Day)"
+          [class.active]="view === CalendarView.Day ? 'bg-blue-700' : ''">
+          Day
+        </button>
+      </div>
+    </div>
+  </div>
+  <br />
+</div>

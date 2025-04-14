@@ -1,0 +1,24 @@
+<nav class="text-white bg-gray-800 p-4">
+  <ul class="flex max-w-screen-xl mx-auto space-x-8">
+    <li class="hover:text-indigo-400">
+      <a routerLink="basic" routerLinkActive="text-indigo-400"
+        class="text-lg font-medium transition-all duration-200">Basic</a>
+    </li>
+    <li class="hover:text-indigo-400">
+      <a routerLink="nested" routerLinkActive="text-indigo-400"
+        class="text-lg font-medium transition-all duration-200">Nested</a>
+    </li>
+    <li class="hover:text-indigo-400">
+      <a routerLink="dynamic" routerLinkActive="text-indigo-400"
+        class="text-lg font-medium transition-all duration-200">Dynamic</a>
+    </li>
+    <li class="hover:text-indigo-400">
+      <a routerLink="dynamic-2" routerLinkActive="text-indigo-400"
+        class="text-lg font-medium transition-all duration-200">Dynamic 2</a>
+    </li>
+  </ul>
+</nav>
+
+<div class="max-w-screen-xl mx-auto p-6">
+  <router-outlet></router-outlet>
+</div>

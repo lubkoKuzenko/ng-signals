@@ -1,0 +1,42 @@
+<div class="min-h-screen bg--gray-200 text-white">
+  <section class="container max-w-screen-xl mx-auto">
+    <div class="flex min-h-screen text-white">
+      <aside class="w-64 bg-gray-300 p-4 text-black">
+        <nav>
+          <ul class="space-y-2">
+            @for (user of users(); track user.id) {
+              <li>
+                <a
+                  [routerLink]="['/data-provider/', user.id]"
+                  [class.font-bold]="isActive(user.id)"
+                  class="block p-2 rounded hover:bg-gray-200"
+                  >{{ user.name }}</a
+                >
+              </li>
+            } @empty {
+              <p>No users found.</p>
+            }
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="flex-1 p-8">
+        <article class="container max-w-screen-xl mx-auto">
+          <h1 class="text-black">Todos:</h1>
+          @for (todo of todos(); track todo.id) {
+            <div class="bg-gray-600 py-1 px-3 rounded-lg my-2 flex justify-between items-center">
+              <h2 class="text-2xl font-semibold mb-3 text-green-400">{{ todo.title }}</h2>
+              <button
+                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                (click)="deleteTodo(todo.id)">
+                Delete
+              </button>
+            </div>
+          } @empty {
+            <p>No users found.</p>
+          }
+        </article>
+      </main>
+    </div>
+  </section>
+</div>
