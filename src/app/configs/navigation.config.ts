@@ -10,6 +10,7 @@ export const navigationConfig: NavigationItem[] = [
   { label: 'Resize', routerLink: '/resize' },
   { label: 'Forms', routerLink: '/forms' },
   { label: 'DnD', routerLink: '/dnd' },
+  { label: 'Map', routerLink: '/map' },
   { label: 'Calendar', routerLink: '/calendar' },
   { label: 'Data Provider', routerLink: '/data-provider' },
   { label: 'Signal Store', routerLink: '/signal-store' },

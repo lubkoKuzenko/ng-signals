@@ -24,6 +24,10 @@ export const routes: Routes = [
     loadChildren: () => import('./pages/dnd/dnd.routes').then(m => m.dndRoutes),
   },
   {
+    path: 'map',
+    loadChildren: () => import('./pages/google-map/google-map.routes').then(m => m.mapRoutes),
+  },
+  {
     path: 'data-provider',
     loadChildren: () => import('./pages/data-provider/data-provider.routes').then(m => m.dataProviderRoutes),
   },
