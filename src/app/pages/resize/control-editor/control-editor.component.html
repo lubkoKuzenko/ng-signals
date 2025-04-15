@@ -1,21 +1,17 @@
 <h3>Edit Control</h3>
 
 <form [formGroup]="form">
+  <button (click)="onClose()" class="remove-button">x</button>
   <div class="mb-2">
     <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
-    <input
-      type="text"
-      id="name"
-      formControlName="name"
+    <input type="text" id="name" formControlName="name"
       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
     <bb-validation-message [control]="controls['name']"></bb-validation-message>
   </div>
 
-  <button
-    type="submit"
+  <button type="submit"
     class="inline-flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-indigo-300 disabled:cursor-not-allowed"
-    [disabled]="form.invalid"
-    (click)="onSubmit()">
+    [disabled]="form.invalid" (click)="onSubmit()">
     Submit
   </button>
 </form>

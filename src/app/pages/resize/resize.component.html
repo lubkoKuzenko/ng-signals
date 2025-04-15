@@ -25,7 +25,8 @@
 
   @if (selectedItem()) {
   <div id="rightSidebar" class="w-64 p-4 bg-gray-100 border-l">
-    <app-control-editor [selectedItem]="selectedItem" (layoutConfigChange)="onConfigurationChanged($event)" />
+    <app-control-editor [selectedItem]="selectedItem" (layoutConfigChange)="onConfigurationChanged($event)"
+      (closed)="selectedItem.set(null)" />
   </div>
   }
 </div>

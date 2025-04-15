@@ -11,6 +11,7 @@ import { ValidationMessageComponent } from '../../../components/validation-messa
 })
 export class ControlEditorComponent {
   @Input() selectedItem = signal<LayoutItemConfig | null>(null);
+  @Output() closed = new EventEmitter<boolean>(false);
   @Output() layoutConfigChange = new EventEmitter<LayoutItemConfig>();
 
   public form = new FormGroup({
@@ -41,5 +42,9 @@ export class ControlEditorComponent {
     };
 
     this.layoutConfigChange.emit(updatedItem);
+  }
+
+  public onClose() {
+    this.closed.emit(true);
   }
 }
