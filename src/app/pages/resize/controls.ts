@@ -1,5 +1,12 @@
 export const controls = [
   {
+    name: 'empty',
+    style: {
+      width: '10%',
+      backgroundColor: '#f9f9f9',
+    },
+  },
+  {
     name: 'text',
     style: {
       width: '100%',
