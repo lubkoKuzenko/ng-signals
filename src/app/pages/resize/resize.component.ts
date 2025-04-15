@@ -16,7 +16,7 @@ import { LayoutItemConfig } from './resize.interface';
 import { ControlEditorComponent } from './control-editor/control-editor.component';
 import { EmptyAreaComponent } from './empty-area/empty-area.component';
 import { AvailableControlsComponent } from './available-controls/available-controls.component';
-import { DialogRef, Dialog, DIALOG_DATA, DialogModule } from '@angular/cdk/dialog';
+import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import { ActionConfirmationDialogComponent } from '../../components/action-confirmation-dialog/action-confirmation-dialog.component';
 import { Observable } from 'rxjs';
 import { ComponentCanDeactivate } from '../../guards/pending-changes.guard';
@@ -38,10 +38,7 @@ import { isEqual } from 'lodash';
     ActionConfirmationDialogComponent,
     AvailableControlsComponent,
   ],
-  providers: [
-    { provide: DIALOG_DATA, useValue: { some: 'data' } }, // Provide a value
-    { provide: DialogRef, useValue: {} },
-  ],
+  providers: [],
   templateUrl: './resize.component.html',
   styleUrl: './resize.component.scss',
 })
