@@ -11,7 +11,7 @@
   </div>
   }
 
-  @if (selectedItem()?.type === ControlTypes.TEXTAREA) {
+  @if (selectedItem()?.type === ControlTypes.TEXTAREA || selectedItem()?.type === ControlTypes.TEXT) {
   <div class="mb-2">
     <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
     <textarea id="name" formControlName="name" rows="5"
