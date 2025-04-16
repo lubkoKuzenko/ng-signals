@@ -5,8 +5,17 @@ import { ControlTypesEnum } from './control-editor/controls.enum';
 export const initialLayout: LayoutItemConfig[] = [
   {
     id: uuid.v4(),
-    name: '1',
+    name: 'just text',
     type: ControlTypesEnum.TEXT,
+    style: {
+      width: '100%',
+      backgroundColor: '#999',
+    },
+  },
+  {
+    id: uuid.v4(),
+    name: '<input type="text" />',
+    type: ControlTypesEnum.INPUT,
     style: {
       width: '30%',
       backgroundColor: 'blue',
@@ -14,8 +23,8 @@ export const initialLayout: LayoutItemConfig[] = [
   },
   {
     id: uuid.v4(),
-    name: '2',
-    type: ControlTypesEnum.TEXT,
+    name: '<input type="text" />',
+    type: ControlTypesEnum.INPUT,
     style: {
       width: '40%',
       backgroundColor: 'orange',
@@ -23,8 +32,8 @@ export const initialLayout: LayoutItemConfig[] = [
   },
   {
     id: uuid.v4(),
-    name: '3',
-    type: ControlTypesEnum.TEXT,
+    name: '<input type="text" />',
+    type: ControlTypesEnum.INPUT,
     style: {
       width: '30%',
       backgroundColor: 'gray',
@@ -32,16 +41,16 @@ export const initialLayout: LayoutItemConfig[] = [
   },
   {
     id: uuid.v4(),
-    name: '4',
+    name: '<textarea></textarea>',
     type: ControlTypesEnum.TEXT,
     style: {
-      width: '50%',
+      width: '40%',
       backgroundColor: 'gray',
     },
   },
   {
     id: uuid.v4(),
-    name: '5',
+    name: '<textarea></textarea>',
     type: ControlTypesEnum.TEXT,
     style: {
       width: '40%',
@@ -50,17 +59,17 @@ export const initialLayout: LayoutItemConfig[] = [
   },
   {
     id: uuid.v4(),
-    name: '6',
-    type: ControlTypesEnum.TEXT,
+    name: '<button></button>',
+    type: ControlTypesEnum.BUTTON,
     style: {
-      width: '20%',
+      width: '30%',
       backgroundColor: 'blue',
     },
   },
   {
     id: uuid.v4(),
-    name: '7',
-    type: ControlTypesEnum.TEXT,
+    name: 'empty area',
+    type: ControlTypesEnum.EMPTY,
     style: {
       width: '60%',
       backgroundColor: 'orange',
