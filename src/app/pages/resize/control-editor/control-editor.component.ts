@@ -2,6 +2,8 @@ import { Component, effect, EventEmitter, Input, Output, signal } from '@angular
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LayoutItemConfig } from '../resize.interface';
 import { ValidationMessageComponent } from '../../../components/validation-message';
+import { ControlTypesEnum } from './controls.enum';
+import { validatorMap } from './validators.config';
 
 @Component({
   selector: 'app-control-editor',
@@ -14,9 +16,9 @@ export class ControlEditorComponent {
   @Output() closed = new EventEmitter<boolean>(false);
   @Output() layoutConfigChange = new EventEmitter<LayoutItemConfig>();
 
-  public form = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.maxLength(3)]),
-  });
+  public ControlTypes = ControlTypesEnum;
+
+  public form!: FormGroup;
 
   get controls() {
     return this.form.controls;
@@ -24,12 +26,17 @@ export class ControlEditorComponent {
 
   constructor() {
     effect(() => {
+      this.form = new FormGroup({});
+
       const currentItem = this.selectedItem();
-      if (currentItem) {
-        this.form.patchValue({ name: currentItem.name });
-      } else {
-        this.form.reset();
+      if (!currentItem) {
+        return;
       }
+
+      this.form.addControl(
+        'name',
+        new FormControl(currentItem.name, validatorMap.get(currentItem.type) || [Validators.required]),
+      );
     });
   }
 

@@ -22,6 +22,7 @@ import { Observable } from 'rxjs';
 import { ComponentCanDeactivate } from '../../guards/pending-changes.guard';
 import { PendingChangesService } from '../../services/pending-changes.service';
 import { isEqual } from 'lodash';
+import { ControlTypesEnum } from './control-editor/controls.enum';
 
 @Component({
   selector: 'app-resize',
@@ -48,7 +49,7 @@ export class ResizeComponent implements ComponentCanDeactivate {
   layoutConfig = signal<LayoutItemConfig[]>(initialLayout);
   selectedItem = signal<LayoutItemConfig | null>(null);
   openDialog$: Observable<boolean> = this.pendingChangesService.askForConfirmation$;
-
+  public ControlTypes = ControlTypesEnum;
   private initialLayoutSnapshot = [...initialLayout];
   canDeactivate(): boolean {
     const currentLayout = this.layoutConfig();
@@ -154,6 +155,7 @@ export class ResizeComponent implements ComponentCanDeactivate {
 
   onConfigurationChanged(newItem: LayoutItemConfig) {
     this.layoutConfig.set(this.layoutConfig().map(item => (item.id === newItem.id ? newItem : item)));
+    this.selectedItem.set(null);
   }
 
   confirm(): void {

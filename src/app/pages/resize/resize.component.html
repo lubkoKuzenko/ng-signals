@@ -6,7 +6,7 @@
     @for (item of layoutConfig(); track item.id) {
     <div cdkDrag class="relative mb-2 p-4" [ngStyle]="{
           width: item.style.width,
-          backgroundColor: item.name === 'empty' ? '#f0f0f0': item.style.backgroundColor,
+          backgroundColor: item.type === ControlTypes.EMPTY ? '#f0f0f0': item.style.backgroundColor,
         }" mwlResizable (click)="onEditControl(item)" [enableGhostResize]="true">
       <button class="bg-blue-500 text-white font-bold px-2 mx-1 rounded" (click)="increaseWidth($event, item.id, 2)">
         +
