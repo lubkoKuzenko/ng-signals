@@ -7,7 +7,8 @@
     <div cdkDrag class="relative mb-2 p-4" [ngStyle]="{
           width: item.style.width,
           backgroundColor: item.type === ControlTypes.EMPTY ? '#f0f0f0': item.style.backgroundColor,
-        }" mwlResizable (click)="onEditControl(item)" [enableGhostResize]="true">
+        }" [ngClass]="{'active': item.id === selectedItem()?.id}" mwlResizable (click)="onEditControl(item)"
+      [enableGhostResize]="true">
       <button class="bg-blue-500 text-white font-bold px-2 mx-1 rounded" (click)="increaseWidth($event, item.id, 2)">
         +
       </button>
