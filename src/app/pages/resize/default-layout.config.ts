@@ -42,7 +42,7 @@ export const initialLayout: LayoutItemConfig[] = [
   {
     id: uuid.v4(),
     name: '<textarea></textarea>',
-    type: ControlTypesEnum.TEXT,
+    type: ControlTypesEnum.TEXTAREA,
     style: {
       width: '40%',
       backgroundColor: 'gray',
@@ -51,7 +51,7 @@ export const initialLayout: LayoutItemConfig[] = [
   {
     id: uuid.v4(),
     name: '<textarea></textarea>',
-    type: ControlTypesEnum.TEXT,
+    type: ControlTypesEnum.TEXTAREA,
     style: {
       width: '40%',
       backgroundColor: 'green',

@@ -150,6 +150,13 @@ export class ResizeComponent implements ComponentCanDeactivate {
   }
 
   onEditControl(item: LayoutItemConfig) {
+    if (item.type === ControlTypesEnum.EMPTY) {
+      if (this.selectedItem()) {
+        return this.selectedItem.set(null);
+      }
+      return;
+    }
+
     this.selectedItem.set(item);
   }
 
