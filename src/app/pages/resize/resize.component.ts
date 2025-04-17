@@ -143,6 +143,10 @@ export class ResizeComponent implements ComponentCanDeactivate {
         {
           ...copiedItem,
           id: uuid.v4(),
+          name:
+            copiedItem.type === ControlTypesEnum.TEXT
+              ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nisl risus, eleifend vitae congue in, accumsan in nibh.'
+              : copiedItem.name,
         },
         ...currentConfig.slice(event.currentIndex),
       ]);
@@ -158,6 +162,24 @@ export class ResizeComponent implements ComponentCanDeactivate {
     }
 
     this.selectedItem.set(item);
+  }
+
+  toggleEditing(id: string, value: boolean) {
+    const updated = this.layoutConfig().map(item => (item.id === id ? { ...item, isEditing: value } : item));
+    this.layoutConfig.set(updated);
+  }
+
+  updateText(value: string, id: string) {
+    const updated = this.layoutConfig().map(item =>
+      item.id === id ? { ...item, name: value, isEditing: false } : item,
+    );
+
+    this.layoutConfig.set(updated);
+
+    // Close the Edit Control form
+    if (this.selectedItem()?.id === id) {
+      this.selectedItem.set(null);
+    }
   }
 
   onConfigurationChanged(newItem: LayoutItemConfig) {

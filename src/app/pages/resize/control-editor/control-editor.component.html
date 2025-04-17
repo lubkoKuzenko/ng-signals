@@ -2,6 +2,30 @@
 
 <form [formGroup]="form">
   <button (click)="onClose()" class="remove-button">x</button>
+
+  @if (selectedItem()?.type === ControlTypes.BUTTON) {
+  <div class="mb-2">
+    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
+    <input type="text" id="name" formControlName="name"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight" />
+  </div>
+  <div class="mb-2">
+    <label for="paddingX" class="block text-gray-700 text-sm font-bold mb-2">Horizontal Padding (px):</label>
+    <input type="number" id="paddingX" formControlName="paddingX" min="0"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight" />
+  </div>
+  <div class="mb-2">
+    <label for="paddingY" class="block text-gray-700 text-sm font-bold mb-2">Vertical Padding (px):</label>
+    <input type="number" id="paddingY" formControlName="paddingY" min="0"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight" />
+  </div>
+  <div class="mb-2">
+    <label for="backgroundColor" class="block text-gray-700 text-sm font-bold mb-2">Background Color:</label>
+    <input type="color" id="backgroundColor" formControlName="backgroundColor"
+      class="shadow appearance-none border rounded w-12 h-9 p-0" />
+  </div>
+  }
+
   @if (selectedItem()?.type === ControlTypes.INPUT) {
   <div class="mb-2">
     <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
