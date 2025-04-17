@@ -16,29 +16,36 @@
         -
       </button>
       <div class="placeholder" [ngStyle]="{ width: item.style.width }" *cdkDragPlaceholder></div>
-      <ng-container [ngSwitch]="item.type">
-        <button *ngSwitchCase="ControlTypes.BUTTON" class="mx-1 text-white rounded" [ngStyle]="{
-              backgroundColor: item.buttonStyle?.backgroundColor || '#3b82f6',
-              paddingBottom: (item.buttonStyle?.paddingY || 8) + 'px',
-              paddingLeft: (item.buttonStyle?.paddingX || 16) + 'px',
-              paddingRight: (item.buttonStyle?.paddingX || 16) + 'px',
-              paddingTop: (item.buttonStyle?.paddingY || 8) + 'px',
-              width: 'calc(100% - 75px)',
-            }">
-          {{ item.name }}
-        </button>
-        <ng-container *ngSwitchCase="ControlTypes.TEXT">
-          <span (click)="toggleEditing(item.id, true)" *ngIf="!item.isEditing">
-            {{ item.name }}
-          </span>
-          <input *ngIf="item.isEditing && item.type === ControlTypes.TEXT" #inputRef type="text"
-            class="mx-1 focus:outline-none focus:shadow-outline" [ngStyle]="{
-              width: 'calc(100% - 75px)',
-            }" [value]="item.name" (blur)="updateText(inputRef.value, item.id)"
-            (keydown.enter)="updateText(inputRef.value, item.id)" />
-        </ng-container>
-        <span *ngSwitchDefault>{{ item.name }}</span>
-      </ng-container>
+      @switch (item.type) {
+      @case (ControlTypes.BUTTON) {
+      <button class="mx-1 text-white rounded" [ngStyle]="{
+            backgroundColor: item.buttonStyle?.backgroundColor || '#3b82f6',
+            paddingBottom: (item.buttonStyle?.paddingY || 8) + 'px',
+            paddingLeft: (item.buttonStyle?.paddingX || 16) + 'px',
+            paddingRight: (item.buttonStyle?.paddingX || 16) + 'px',
+            paddingTop: (item.buttonStyle?.paddingY || 8) + 'px',
+            width: 'calc(100% - 75px)',
+          }">
+        {{ item.name }}
+      </button>
+      }
+      @case (ControlTypes.TEXT) {
+      @if (!item.isEditing) {
+      <span (click)="toggleEditing(item.id, true)">
+        {{ item.name }}
+      </span>
+      }
+      @if (item.isEditing && item.type === ControlTypes.TEXT) {
+      <input #inputRef type="text" class="mx-1 focus:outline-none focus:shadow-outline" [ngStyle]="{
+                width: 'calc(100% - 75px)',
+              }" [value]="item.name" (blur)="updateText(inputRef.value, item.id)"
+        (keydown.enter)="updateText(inputRef.value, item.id)" />
+      }
+      }
+      @default {
+      <span>{{ item.name }}</span>
+      }
+      }
       <button (click)="remove($event, item.id)" class="remove-button">x</button>
     </div>
     } @empty {
