@@ -37,15 +37,37 @@ export class ControlEditorComponent {
         'name',
         new FormControl(currentItem.name, validatorMap.get(currentItem.type) || [Validators.required]),
       );
+
+      if (currentItem.type === ControlTypesEnum.BUTTON) {
+        const style = currentItem.buttonStyle || {};
+
+        this.form.addControl(
+          'backgroundColor',
+          new FormControl(style?.backgroundColor || '#3b82f6'), // Default Tailwind blue-500
+        );
+        this.form.addControl('paddingX', new FormControl(style.paddingX || '16'));
+        this.form.addControl('paddingY', new FormControl(style.paddingY || '8'));
+      }
     });
   }
 
   public onSubmit() {
-    const { name } = this.form.getRawValue();
+    const { name, backgroundColor, paddingX, paddingY } = this.form.getRawValue();
+    const currentItem = this.selectedItem();
 
     const updatedItem: LayoutItemConfig = {
-      ...this.selectedItem()!,
+      ...currentItem!,
       name: name || '',
+      ...(currentItem?.type === ControlTypesEnum.BUTTON
+        ? {
+            buttonStyle: {
+              ...currentItem?.buttonStyle,
+              backgroundColor,
+              paddingX,
+              paddingY,
+            },
+          }
+        : {}),
     };
 
     this.layoutConfigChange.emit(updatedItem);

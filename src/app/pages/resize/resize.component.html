@@ -4,9 +4,9 @@
   <div class="drop-area flex flex-wrap" cdkDropList id="dropArea" [cdkDropListData]="layoutConfig()"
     [cdkDropListConnectedTo]="[]" cdkDropListOrientation="mixed" (cdkDropListDropped)="drop($event)">
     @for (item of layoutConfig(); track item.id) {
-    <div cdkDrag class="relative mb-2 p-4" [ngStyle]="{
+    <div cdkDrag class="relative mb-2 p-4 flex items-center flex-wrap" [ngStyle]="{
           width: item.style.width,
-          backgroundColor: item.type === ControlTypes.EMPTY ? '#f0f0f0': item.style.backgroundColor,
+          backgroundColor: item.type === ControlTypes.EMPTY ? '#f0f0f0' : item.style.backgroundColor,
         }" [ngClass]="{'active': item.id === selectedItem()?.id}" mwlResizable (click)="onEditControl(item)"
       [enableGhostResize]="true">
       <button class="bg-blue-500 text-white font-bold px-2 mx-1 rounded" (click)="increaseWidth($event, item.id, 2)">
@@ -16,7 +16,36 @@
         -
       </button>
       <div class="placeholder" [ngStyle]="{ width: item.style.width }" *cdkDragPlaceholder></div>
-      {{ item.name }}
+      @switch (item.type) {
+      @case (ControlTypes.BUTTON) {
+      <button class="mx-1 text-white rounded" [ngStyle]="{
+            backgroundColor: item.buttonStyle?.backgroundColor || '#3b82f6',
+            paddingBottom: (item.buttonStyle?.paddingY || 8) + 'px',
+            paddingLeft: (item.buttonStyle?.paddingX || 16) + 'px',
+            paddingRight: (item.buttonStyle?.paddingX || 16) + 'px',
+            paddingTop: (item.buttonStyle?.paddingY || 8) + 'px',
+            width: 'calc(100% - 75px)',
+          }">
+        {{ item.name }}
+      </button>
+      }
+      @case (ControlTypes.TEXT) {
+      @if (!item.isEditing) {
+      <span (click)="toggleEditing(item.id, true)">
+        {{ item.name }}
+      </span>
+      }
+      @if (item.isEditing && item.type === ControlTypes.TEXT) {
+      <input #inputRef type="text" class="mx-1 focus:outline-none focus:shadow-outline" [ngStyle]="{
+                width: 'calc(100% - 75px)',
+              }" [value]="item.name" (blur)="updateText(inputRef.value, item.id)"
+        (keydown.enter)="updateText(inputRef.value, item.id)" />
+      }
+      }
+      @default {
+      <span>{{ item.name }}</span>
+      }
+      }
       <button (click)="remove($event, item.id)" class="remove-button">x</button>
     </div>
     } @empty {
@@ -31,7 +60,6 @@
   </div>
   }
 </div>
-
 
 <app-action-confirmation-dialog [open]="(openDialog$ | async) || false" (confirmed)="confirm()"
   (cancelled)="cancel()" />

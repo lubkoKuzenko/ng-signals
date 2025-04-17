@@ -12,7 +12,7 @@ export const controls: Omit<LayoutItemConfig, 'id'>[] = [
   },
   {
     name: 'text',
-    type: ControlTypesEnum.TEXTAREA,
+    type: ControlTypesEnum.TEXT,
     style: {
       width: '100%',
       backgroundColor: 'gainsboro',
