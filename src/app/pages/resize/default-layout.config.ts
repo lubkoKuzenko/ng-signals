@@ -59,7 +59,7 @@ export const initialLayout: LayoutItemConfig[] = [
   },
   {
     id: uuid.v4(),
-    name: '<button></button>',
+    name: 'click',
     type: ControlTypesEnum.BUTTON,
     style: {
       width: '30%',
