@@ -3,9 +3,9 @@ import { BaseControlComponent } from '../base.component';
 import { LayoutItemConfig } from '../../resize.interface';
 
 @Component({
-  selector: 'app-span',
+  selector: 'app-empty',
   imports: [],
-  templateUrl: './span.component.html',
-  styleUrl: './span.component.scss',
+  templateUrl: './empty.component.html',
+  styleUrl: './empty.component.scss',
 })
-export class SpanComponent extends BaseControlComponent<LayoutItemConfig> {}
+export class EmptyComponent extends BaseControlComponent<LayoutItemConfig> {}
