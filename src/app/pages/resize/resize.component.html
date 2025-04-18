@@ -10,50 +10,23 @@
       [enableGhostResize]="true">
 
       <div class="placeholder" [ngStyle]="{ width: item.style.width }" *cdkDragPlaceholder></div>
+
       @switch (item.type) {
       @case (ControlTypes.INPUT) {
-      <div class="block w-full">
-        <label for="message" class="block mb-2 text-sm font-medium text-gray-900 ">{{item.name}}</label>
-        <input type="text"
-          class="bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-          placeholder="Type here..." />
-      </div>
+      <app-input [control]="item"></app-input>
       }
       @case (ControlTypes.TEXTAREA) {
-      <div class="block w-full">
-        <label for="message" class="block mb-2 text-sm font-medium text-gray-900 ">{{item.name}}</label>
-        <textarea id="message" rows="4"
-          class="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Write your thoughts here..."></textarea>
-      </div>
+      <app-textarea [control]="item"></app-textarea>
       }
       @case (ControlTypes.BUTTON) {
-      <button class="mx-1 text-white rounded" [ngStyle]="{
-            backgroundColor: item.buttonStyle?.backgroundColor || '#3b82f6',
-            paddingBottom: (item.buttonStyle?.paddingY || 8) + 'px',
-            paddingLeft: (item.buttonStyle?.paddingX || 16) + 'px',
-            paddingRight: (item.buttonStyle?.paddingX || 16) + 'px',
-            paddingTop: (item.buttonStyle?.paddingY || 8) + 'px',
-            width: 'calc(100% - 75px)',
-          }">
-        {{ item.name }}
-      </button>
+      <app-button [control]="item" />
       }
       @case (ControlTypes.TEXT) {
-      @if (!item.isEditing) {
-      <span (click)="toggleEditing(item.id, true)">
-        <div class="block w-full">{{ item.name }}</div>
-      </span>
-      }
-      @if (item.isEditing && item.type === ControlTypes.TEXT) {
-      <input #inputRef type="text" class="mx-1 focus:outline-none focus:shadow-outline" [ngStyle]="{
-                width: 'calc(100% - 75px)',
-              }" [value]="item.name" (blur)="updateText(inputRef.value, item.id)"
-        (keydown.enter)="updateText(inputRef.value, item.id)" />
-      }
+      <app-text [control]="item" (toggleEditing)="toggleEditing($event.id, $event.value)"
+        (updateText)="updateText($event.value, $event.id)" />
       }
       @default {
-      <span>{{ item.name }}</span>
+      <app-span [control]="item" />
       }
       }
 

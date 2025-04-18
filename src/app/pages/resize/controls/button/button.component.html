@@ -1,0 +1,10 @@
+<button class="mx-1 text-white rounded" [ngStyle]="{
+    backgroundColor: control.buttonStyle?.backgroundColor || '#3b82f6',
+    paddingBottom: (control.buttonStyle?.paddingY || 8) + 'px',
+    paddingLeft: (control.buttonStyle?.paddingX || 16) + 'px',
+    paddingRight: (control.buttonStyle?.paddingX || 16) + 'px',
+    paddingTop: (control.buttonStyle?.paddingY || 8) + 'px',
+    width: 'calc(100% - 75px)',
+  }">
+    {{ control.name }}
+</button>

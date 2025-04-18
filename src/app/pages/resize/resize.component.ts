@@ -23,6 +23,11 @@ import { ComponentCanDeactivate } from '../../guards/pending-changes.guard';
 import { PendingChangesService } from '../../services/pending-changes.service';
 import { isEqual } from 'lodash';
 import { ControlTypesEnum } from './control-editor/controls.enum';
+import { InputComponent } from './controls/input/input.component';
+import { TextAreaComponent } from './controls/textarea/textarea.component';
+import { ButtonComponent } from './controls/button/button.component';
+import { SpanComponent } from './controls/span/span.component';
+import { TextComponent } from './controls/text/text.component';
 
 @Component({
   selector: 'app-resize',
@@ -38,6 +43,12 @@ import { ControlTypesEnum } from './control-editor/controls.enum';
     EmptyAreaComponent,
     ActionConfirmationDialogComponent,
     AvailableControlsComponent,
+
+    SpanComponent,
+    TextComponent,
+    InputComponent,
+    TextAreaComponent,
+    ButtonComponent,
   ],
   providers: [],
   templateUrl: './resize.component.html',
