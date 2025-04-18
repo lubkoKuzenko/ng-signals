@@ -5,7 +5,7 @@ import { ControlTypesEnum } from './control-editor/controls.enum';
 export const initialLayout: LayoutItemConfig[] = [
   {
     id: uuid.v4(),
-    name: 'just text',
+    name: 'Text',
     type: ControlTypesEnum.TEXT,
     style: {
       width: '100%',
@@ -14,7 +14,7 @@ export const initialLayout: LayoutItemConfig[] = [
   },
   {
     id: uuid.v4(),
-    name: '<input type="text" />',
+    name: 'Label',
     type: ControlTypesEnum.INPUT,
     style: {
       width: '30%',
@@ -23,7 +23,7 @@ export const initialLayout: LayoutItemConfig[] = [
   },
   {
     id: uuid.v4(),
-    name: '<input type="text" />',
+    name: 'Label',
     type: ControlTypesEnum.INPUT,
     style: {
       width: '40%',
@@ -32,7 +32,7 @@ export const initialLayout: LayoutItemConfig[] = [
   },
   {
     id: uuid.v4(),
-    name: '<input type="text" />',
+    name: 'Label',
     type: ControlTypesEnum.INPUT,
     style: {
       width: '30%',
@@ -41,7 +41,7 @@ export const initialLayout: LayoutItemConfig[] = [
   },
   {
     id: uuid.v4(),
-    name: '<textarea></textarea>',
+    name: 'Label',
     type: ControlTypesEnum.TEXTAREA,
     style: {
       width: '40%',
@@ -50,7 +50,7 @@ export const initialLayout: LayoutItemConfig[] = [
   },
   {
     id: uuid.v4(),
-    name: '<textarea></textarea>',
+    name: 'Label',
     type: ControlTypesEnum.TEXTAREA,
     style: {
       width: '40%',
