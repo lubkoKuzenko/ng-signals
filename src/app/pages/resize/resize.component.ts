@@ -100,6 +100,16 @@ export class ResizeComponent implements ComponentCanDeactivate, OnDestroy {
           this.componentRefs.set(control.id, componentRef);
           const createdComponentInstance = componentRef.instance;
           createdComponentInstance.control = control;
+
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (createdComponentInstance as any)['toggleEditing']?.subscribe((data: { id: string; value: boolean }) => {
+            this.toggleEditing(data.id, data.value);
+          });
+
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (createdComponentInstance as any)['updateText']?.subscribe((data: { value: string; id: string }) => {
+            this.updateText(data.value, data.id);
+          });
         } else {
           console.warn(`Component type not found for: ${control.type}`);
         }
