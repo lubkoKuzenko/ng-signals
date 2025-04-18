@@ -11,24 +11,7 @@
 
       <div class="placeholder" [ngStyle]="{ width: item.style.width }" *cdkDragPlaceholder></div>
 
-      @switch (item.type) {
-      @case (ControlTypes.INPUT) {
-      <app-input [control]="item"></app-input>
-      }
-      @case (ControlTypes.TEXTAREA) {
-      <app-textarea [control]="item"></app-textarea>
-      }
-      @case (ControlTypes.BUTTON) {
-      <app-button [control]="item" />
-      }
-      @case (ControlTypes.TEXT) {
-      <app-text [control]="item" (toggleEditing)="toggleEditing($event.id, $event.value)"
-        (updateText)="updateText($event.value, $event.id)" />
-      }
-      @default {
-      <app-span [control]="item" />
-      }
-      }
+      <ng-container #container></ng-container>
 
       <div class="action-block">
         <button class="bg-green-500 text-white font-bold px-2 mx-1 rounded" (click)="increaseWidth($event, item.id, 2)">

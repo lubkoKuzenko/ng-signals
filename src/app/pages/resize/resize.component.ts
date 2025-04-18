@@ -1,5 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import {
+  Component,
+  ComponentRef,
+  effect,
+  inject,
+  Injector,
+  OnDestroy,
+  Signal,
+  signal,
+  Type,
+  viewChildren,
+  ViewContainerRef,
+} from '@angular/core';
 import { ResizableModule } from 'angular-resizable-element';
 import {
   CdkDragDrop,
@@ -26,8 +38,17 @@ import { ControlTypesEnum } from './control-editor/controls.enum';
 import { InputComponent } from './controls/input/input.component';
 import { TextAreaComponent } from './controls/textarea/textarea.component';
 import { ButtonComponent } from './controls/button/button.component';
-import { SpanComponent } from './controls/span/span.component';
 import { TextComponent } from './controls/text/text.component';
+import { BaseControlComponent } from './controls/base.component';
+import { EmptyComponent } from './controls/empty/empty.component';
+
+export const CONTROLS_MAP = new Map<ControlTypesEnum, Type<unknown>>([
+  [ControlTypesEnum.TEXT, TextComponent],
+  [ControlTypesEnum.INPUT, InputComponent],
+  [ControlTypesEnum.TEXTAREA, TextAreaComponent],
+  [ControlTypesEnum.BUTTON, ButtonComponent],
+  [ControlTypesEnum.EMPTY, EmptyComponent],
+]);
 
 @Component({
   selector: 'app-resize',
@@ -43,30 +64,64 @@ import { TextComponent } from './controls/text/text.component';
     EmptyAreaComponent,
     ActionConfirmationDialogComponent,
     AvailableControlsComponent,
-
-    SpanComponent,
-    TextComponent,
-    InputComponent,
-    TextAreaComponent,
-    ButtonComponent,
   ],
   providers: [],
   templateUrl: './resize.component.html',
   styleUrl: './resize.component.scss',
 })
-export class ResizeComponent implements ComponentCanDeactivate {
+export class ResizeComponent implements ComponentCanDeactivate, OnDestroy {
   dialog = inject(Dialog);
   pendingChangesService = inject(PendingChangesService);
+
+  vrc = viewChildren('container', { read: ViewContainerRef });
+  public componentRefs = new Map<string, ComponentRef<BaseControlComponent<LayoutItemConfig>>>();
+
   layoutConfig = signal<LayoutItemConfig[]>(initialLayout);
   selectedItem = signal<LayoutItemConfig | null>(null);
   openDialog$: Observable<boolean> = this.pendingChangesService.askForConfirmation$;
   public ControlTypes = ControlTypesEnum;
   private initialLayoutSnapshot = [...initialLayout];
+
+  constructor(private readonly injector: Injector) {
+    effect(() => {
+      this.layoutConfig().forEach(control => this.createControl(control, this.vrc));
+    });
+  }
+
+  public createControl(control: LayoutItemConfig, vrc: Signal<readonly ViewContainerRef[]>) {
+    const index = this.layoutConfig().findIndex(item => item.id === control.id);
+    if (index !== -1 && vrc().length) {
+      if (vrc()[index]) {
+        const container = vrc()[index];
+        container.clear();
+        const component = CONTROLS_MAP.get(control.type) as Type<BaseControlComponent<LayoutItemConfig>>;
+        if (component) {
+          const componentRef = container.createComponent(component, { injector: this.injector });
+          this.componentRefs.set(control.id, componentRef);
+          const createdComponentInstance = componentRef.instance;
+          createdComponentInstance.control = control;
+        } else {
+          console.warn(`Component type not found for: ${control.type}`);
+        }
+      } else {
+        console.warn(`Container not found for control with ID: ${control.id}`);
+      }
+    }
+  }
+
   canDeactivate(): boolean {
     const currentLayout = this.layoutConfig();
     const hasChanges = !isEqual(currentLayout, this.initialLayoutSnapshot);
 
     return !hasChanges;
+  }
+
+  public ngOnDestroy() {
+    // Destroy all dynamically created components
+    this.componentRefs.forEach(ref => ref.destroy());
+
+    // Optionally clear the map
+    this.componentRefs.clear();
   }
 
   increaseWidth(e: MouseEvent, id: string, amount: number) {
