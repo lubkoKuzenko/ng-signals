@@ -1,0 +1,59 @@
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input,
+textarea {
+  border: 1px solid #666666;
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+div {
+  margin-bottom: 10px;
+}
+
+.red {
+  color: red;
+}
+.row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.col-25 {
+  width: 25%; /* Adjust width to account for padding */
+  padding: 5px; /* Add padding for the gap */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.col-50 {
+  width: 50%; /* Adjust width to account for padding */
+  padding: 5px; /* Add padding for the gap */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.col-100 {
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+}

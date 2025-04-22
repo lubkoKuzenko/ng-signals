@@ -9,6 +9,11 @@ export interface LayoutItemConfig {
     width: string;
     backgroundColor?: string;
   };
+  validators: {
+    required?: boolean;
+    min?: number;
+    max?: number;
+  };
   buttonStyle?: {
     backgroundColor?: string;
     paddingX?: string;

@@ -28,6 +28,8 @@ import { TextAreaComponent } from './controls/textarea/textarea.component';
 import { ButtonComponent } from './controls/button/button.component';
 import { SpanComponent } from './controls/span/span.component';
 import { TextComponent } from './controls/text/text.component';
+import { SourceCodePreviewComponent } from './source-code-preview/source-code-preview.component';
+import { ResultPreviewComponent } from './result-preview/result-preview.component';
 
 @Component({
   selector: 'app-resize',
@@ -43,6 +45,8 @@ import { TextComponent } from './controls/text/text.component';
     EmptyAreaComponent,
     ActionConfirmationDialogComponent,
     AvailableControlsComponent,
+    SourceCodePreviewComponent,
+    ResultPreviewComponent,
 
     SpanComponent,
     TextComponent,
@@ -60,6 +64,8 @@ export class ResizeComponent implements ComponentCanDeactivate {
   layoutConfig = signal<LayoutItemConfig[]>(initialLayout);
   selectedItem = signal<LayoutItemConfig | null>(null);
   openDialog$: Observable<boolean> = this.pendingChangesService.askForConfirmation$;
+  public openSourceDialog = signal<boolean>(false);
+  public openViewerDialog = signal<boolean>(false);
   public ControlTypes = ControlTypesEnum;
   private initialLayoutSnapshot = [...initialLayout];
   canDeactivate(): boolean {

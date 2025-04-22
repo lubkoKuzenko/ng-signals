@@ -9,6 +9,7 @@ export const controls: Omit<LayoutItemConfig, 'id'>[] = [
       width: '10%',
       backgroundColor: '#f9f9f9',
     },
+    validators: {},
   },
   {
     name: 'text',
@@ -17,6 +18,7 @@ export const controls: Omit<LayoutItemConfig, 'id'>[] = [
       width: '100%',
       backgroundColor: 'gainsboro',
     },
+    validators: {},
   },
   {
     name: 'textfield',
@@ -25,6 +27,7 @@ export const controls: Omit<LayoutItemConfig, 'id'>[] = [
       width: '30%',
       backgroundColor: 'orange',
     },
+    validators: {},
   },
   {
     name: 'button',
@@ -33,5 +36,6 @@ export const controls: Omit<LayoutItemConfig, 'id'>[] = [
       width: '30%',
       backgroundColor: 'green',
     },
+    validators: {},
   },
 ];

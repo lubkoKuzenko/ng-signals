@@ -11,6 +11,9 @@ export const initialLayout: LayoutItemConfig[] = [
       width: '100%',
       backgroundColor: '#999',
     },
+    validators: {
+      required: true,
+    },
   },
   {
     id: uuid.v4(),
@@ -19,6 +22,9 @@ export const initialLayout: LayoutItemConfig[] = [
     style: {
       width: '30%',
       backgroundColor: 'blue',
+    },
+    validators: {
+      required: false,
     },
   },
   {
@@ -29,6 +35,9 @@ export const initialLayout: LayoutItemConfig[] = [
       width: '40%',
       backgroundColor: 'orange',
     },
+    validators: {
+      required: false,
+    },
   },
   {
     id: uuid.v4(),
@@ -38,6 +47,9 @@ export const initialLayout: LayoutItemConfig[] = [
       width: '30%',
       backgroundColor: 'gray',
     },
+    validators: {
+      required: false,
+    },
   },
   {
     id: uuid.v4(),
@@ -46,6 +58,9 @@ export const initialLayout: LayoutItemConfig[] = [
     style: {
       width: '40%',
       backgroundColor: 'gray',
+    },
+    validators: {
+      required: false,
     },
   },
   {
@@ -56,6 +71,9 @@ export const initialLayout: LayoutItemConfig[] = [
       width: '40%',
       backgroundColor: 'green',
     },
+    validators: {
+      required: false,
+    },
   },
   {
     id: uuid.v4(),
@@ -65,6 +83,9 @@ export const initialLayout: LayoutItemConfig[] = [
       width: '30%',
       backgroundColor: 'blue',
     },
+    validators: {
+      required: false,
+    },
   },
   {
     id: uuid.v4(),
@@ -73,6 +94,9 @@ export const initialLayout: LayoutItemConfig[] = [
     style: {
       width: '60%',
       backgroundColor: 'orange',
+    },
+    validators: {
+      required: false,
     },
   },
 ];
