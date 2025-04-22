@@ -1,7 +1,7 @@
 <div class="map-container">
-    <google-map [center]="center" [zoom]="zoom">
-        @for (marker of markers; track $index) {
-        <map-marker [position]="marker"></map-marker>
-        }
-    </google-map>
+  <google-map [center]="center" [zoom]="zoom">
+    @for (marker of markers; track $index) {
+      <map-marker [position]="marker"></map-marker>
+    }
+  </google-map>
 </div>

@@ -1,23 +1,23 @@
 <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
   <div>
     @for (control of jsonFormData()?.controls; track control.name) {
-    @if (control.label !== '') {
-    <label [for]="control.name">{{ control.label }}</label>
-    }
+      @if (control.label !== '') {
+        <label [for]="control.name">{{ control.label }}</label>
+      }
 
-    @if (['text', 'password', 'email', 'number', 'search', 'tel', 'url'].includes(control.type)) {
-    <input [type]="control.type" [formControlName]="control.name" [id]="control.name" />
-    }
+      @if (['text', 'password', 'email', 'number', 'search', 'tel', 'url'].includes(control.type)) {
+        <input [type]="control.type" [formControlName]="control.name" [id]="control.name" />
+      }
 
-    @if (control.type === 'textarea') {
-    <textarea [formControlName]="control.name"></textarea>
-    }
+      @if (control.type === 'textarea') {
+        <textarea [formControlName]="control.name"></textarea>
+      }
 
-    @if (myForm.get(control.name)?.invalid && myForm.get(control.name)?.touched) {
-    @if (myForm.get(control.name)?.errors?.['required']) {
-    <bb-validation-message [control]="myForm.get(control.name)!"></bb-validation-message>
-    }
-    }
+      @if (myForm.get(control.name)?.invalid && myForm.get(control.name)?.touched) {
+        @if (myForm.get(control.name)?.errors?.['required']) {
+          <bb-validation-message [control]="myForm.get(control.name)!"></bb-validation-message>
+        }
+      }
     }
   </div>
 

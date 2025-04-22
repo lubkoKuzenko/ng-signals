@@ -1,11 +1,17 @@
 @if (!control.isEditing) {
-<span (click)="toggleEditing.emit({id: control.id, value:true})">
+  <span (click)="toggleEditing.emit({ id: control.id, value: true })">
     <div class="block w-full">{{ control.name }}</div>
-</span>
+  </span>
 }
 @if (control.isEditing && control.type === ControlTypes.TEXT) {
-<input #inputRef type="text" class="mx-1 focus:outline-none focus:shadow-outline" [ngStyle]="{
-              width: 'calc(100% - 75px)',
-            }" [value]="control.name" (blur)="updateText.emit({value: inputRef.value, id: control.id})"
-    (keydown.enter)="updateText.emit({value: inputRef.value, id: control.id})" />
+  <input
+    #inputRef
+    type="text"
+    class="mx-1 focus:outline-none focus:shadow-outline"
+    [ngStyle]="{
+      width: 'calc(100% - 75px)',
+    }"
+    [value]="control.name"
+    (blur)="updateText.emit({ value: inputRef.value, id: control.id })"
+    (keydown.enter)="updateText.emit({ value: inputRef.value, id: control.id })" />
 }

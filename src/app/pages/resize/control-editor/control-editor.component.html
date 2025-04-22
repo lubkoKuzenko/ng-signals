@@ -4,49 +4,71 @@
   <button (click)="onClose()" class="remove-button">x</button>
 
   @if (selectedItem()?.type === ControlTypes.BUTTON) {
-  <div class="mb-2">
-    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
-    <input type="text" id="name" formControlName="name"
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight" />
-  </div>
-  <div class="mb-2">
-    <label for="paddingX" class="block text-gray-700 text-sm font-bold mb-2">Horizontal Padding (px):</label>
-    <input type="number" id="paddingX" formControlName="paddingX" min="0"
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight" />
-  </div>
-  <div class="mb-2">
-    <label for="paddingY" class="block text-gray-700 text-sm font-bold mb-2">Vertical Padding (px):</label>
-    <input type="number" id="paddingY" formControlName="paddingY" min="0"
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight" />
-  </div>
-  <div class="mb-2">
-    <label for="backgroundColor" class="block text-gray-700 text-sm font-bold mb-2">Background Color:</label>
-    <input type="color" id="backgroundColor" formControlName="backgroundColor"
-      class="shadow appearance-none border rounded w-12 h-9 p-0" />
-  </div>
+    <div class="mb-2">
+      <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
+      <input
+        type="text"
+        id="name"
+        formControlName="name"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight" />
+    </div>
+    <div class="mb-2">
+      <label for="paddingX" class="block text-gray-700 text-sm font-bold mb-2">Horizontal Padding (px):</label>
+      <input
+        type="number"
+        id="paddingX"
+        formControlName="paddingX"
+        min="0"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight" />
+    </div>
+    <div class="mb-2">
+      <label for="paddingY" class="block text-gray-700 text-sm font-bold mb-2">Vertical Padding (px):</label>
+      <input
+        type="number"
+        id="paddingY"
+        formControlName="paddingY"
+        min="0"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight" />
+    </div>
+    <div class="mb-2">
+      <label for="backgroundColor" class="block text-gray-700 text-sm font-bold mb-2">Background Color:</label>
+      <input
+        type="color"
+        id="backgroundColor"
+        formControlName="backgroundColor"
+        class="shadow appearance-none border rounded w-12 h-9 p-0" />
+    </div>
   }
 
   @if (selectedItem()?.type === ControlTypes.INPUT) {
-  <div class="mb-2">
-    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
-    <input type="text" id="name" formControlName="name"
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-    <bb-validation-message [control]="controls['name']"></bb-validation-message>
-  </div>
+    <div class="mb-2">
+      <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
+      <input
+        type="text"
+        id="name"
+        formControlName="name"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+      <bb-validation-message [control]="controls['name']"></bb-validation-message>
+    </div>
   }
 
   @if (selectedItem()?.type === ControlTypes.TEXTAREA || selectedItem()?.type === ControlTypes.TEXT) {
-  <div class="mb-2">
-    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
-    <textarea id="name" formControlName="name" rows="5"
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
-    <bb-validation-message [control]="controls['name']"></bb-validation-message>
-  </div>
+    <div class="mb-2">
+      <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
+      <textarea
+        id="name"
+        formControlName="name"
+        rows="5"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+      <bb-validation-message [control]="controls['name']"></bb-validation-message>
+    </div>
   }
 
-  <button type="submit"
+  <button
+    type="submit"
     class="inline-flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-indigo-300 disabled:cursor-not-allowed"
-    [disabled]="form.invalid" (click)="onSubmit()">
+    [disabled]="form.invalid"
+    (click)="onSubmit()">
     Submit
   </button>
 </form>
