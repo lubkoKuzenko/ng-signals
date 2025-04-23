@@ -1,5 +1,5 @@
 <div class="flex flex-wrap">
-  <app-available-controls />
+  <app-available-controls-row [layoutConfig]="layoutConfig()" />
 
   <div class="flex flex-col flex-1">
     <div class="flex gap-3 align-center justify-center">
@@ -7,17 +7,21 @@
       <button class="py-2 px-4 text-white bg-indigo-600" (click)="openSourceDialog.set(true)">Source</button>
     </div>
 
-    <div
-      class="drop-area flex flex-wrap"
-      cdkDropList
-      id="dropArea"
-      [cdkDropListData]="layoutConfig()"
-      [cdkDropListConnectedTo]="[]"
-      cdkDropListOrientation="mixed"
-      (cdkDropListDropped)="drop($event)">
-      @for (item of layoutConfig(); track item.id) {
+    <div class="layout-container">
+      <div
+        *ngFor="let row of layoutConfig(); let i = index"
+        cdkDropList
+        [id]="'row-' + i"
+        [cdkDropListData]="row"
+        [cdkDropListConnectedTo]="getConnectedDropLists(i)"
+        cdkDropListOrientation="mixed"
+        (cdkDropListDropped)="drop($event)"
+        class="layout-row">
         <div
+          *ngFor="let item of row"
           cdkDrag
+          [cdkDragData]="item"
+          class="layout-item"
           class="relative mb-2 p-4 flex items-center flex-wrap"
           [ngStyle]="{
             width: item.style.width,
@@ -25,9 +29,7 @@
             backgroundColor: '#f9f9f9',
           }"
           [ngClass]="{ active: item.id === selectedItem()?.id }"
-          mwlResizable
-          (click)="onEditControl(item)"
-          [enableGhostResize]="true">
+          (click)="onEditControl(item)">
           @switch (item.type) {
             @case (ControlTypes.INPUT) {
               <app-input [control]="item"></app-input>
@@ -63,9 +65,17 @@
             <button class="font-bold px-1 mx-1 rounded" (click)="remove($event, item.id)">x</button>
           </div>
         </div>
-      } @empty {
-        <app-empty-area />
-      }
+      </div>
+      <div
+        cdkDropList
+        id="new-row-drop-zone"
+        [cdkDropListData]="[]"
+        [cdkDropListConnectedTo]="getAllRowDropListIds()"
+        (cdkDropListDropped)="dropOnNewRow($any($event))"
+        cdkDropListOrientation="mixed"
+        class="new-row-placeholder">
+        Drag here to add a new row
+      </div>
     </div>
   </div>
 
@@ -89,7 +99,7 @@
   [layoutConfig]="layoutConfig()"
   (closed)="openSourceDialog.set(false)"></app-source-code-preview>
 
-<app-result-preview
+<!-- <app-result-preview
   [open]="openViewerDialog() || false"
   [layoutConfig]="layoutConfig()"
-  (closed)="openViewerDialog.set(false)"></app-result-preview>
+  (closed)="openViewerDialog.set(false)"></app-result-preview> -->

@@ -1,14 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { ResizableModule } from 'angular-resizable-element';
-import {
-  CdkDragDrop,
-  CdkDropList,
-  CdkDrag,
-  moveItemInArray,
-  DragDropModule,
-  CdkDragPlaceholder,
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDropList, CdkDrag, moveItemInArray, DragDropModule } from '@angular/cdk/drag-drop';
 import * as uuid from 'uuid';
 
 import { initialLayout } from './default-layout.config';
@@ -40,7 +33,6 @@ import { ResultPreviewComponent } from './result-preview/result-preview.componen
     DialogModule,
     CdkDropList,
     CdkDrag,
-    CdkDragPlaceholder,
     ControlEditorComponent,
     EmptyAreaComponent,
     ActionConfirmationDialogComponent,
