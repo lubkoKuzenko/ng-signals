@@ -1,20 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { ResizableModule } from 'angular-resizable-element';
-import {
-  CdkDragDrop,
-  CdkDropList,
-  CdkDrag,
-  moveItemInArray,
-  DragDropModule,
-  CdkDragPlaceholder,
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDropList, CdkDrag, moveItemInArray, DragDropModule } from '@angular/cdk/drag-drop';
 import * as uuid from 'uuid';
 
 import { initialLayout } from '../default-layout.config';
 import { LayoutItemConfig } from '../resize.interface';
 import { ControlEditorComponent } from '../control-editor/control-editor.component';
-import { EmptyAreaComponent } from '../empty-area/empty-area.component';
 import { AvailableControlsComponent } from '../available-controls-row/available-controls.component';
 import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import { ActionConfirmationDialogComponent } from '../../../components/action-confirmation-dialog/action-confirmation-dialog.component';
@@ -164,23 +156,36 @@ export class DndRowsComponent implements ComponentCanDeactivate {
     this.selectedItem.set(item);
   }
 
-  // toggleEditing(id: string, value: boolean) {
-  //   const updated = this.layoutConfig().map(item => (item.id === id ? { ...item, isEditing: value } : item));
-  //   this.layoutConfig.set(updated);
-  // }
+  toggleEditing(id: string, value: boolean) {
+    const rowIndex = 0; // Assuming you want to toggle editing in the first row
 
-  // updateText(value: string, id: string) {
-  //   const updated = this.layoutConfig().map(item =>
-  //     item.id === id ? { ...item, name: value, isEditing: false } : item,
-  //   );
+    const updatedLayoutConfig = this.layoutConfig().map((row, index) => {
+      if (index === rowIndex) {
+        return row.map(item => (item.id === id ? { ...item, isEditing: value } : item));
+      }
+      return row;
+    });
 
-  //   this.layoutConfig.set(updated);
+    this.layoutConfig.set(updatedLayoutConfig);
+  }
 
-  //   // Close the Edit Control form
-  //   if (this.selectedItem()?.id === id) {
-  //     this.selectedItem.set(null);
-  //   }
-  // }
+  updateText(value: string, id: string) {
+    const rowIndex = 0; // Assuming you want to update text in the first row
+
+    const updatedLayoutConfig = this.layoutConfig().map((row, index) => {
+      if (index === rowIndex) {
+        return row.map(item => (item.id === id ? { ...item, name: value, isEditing: false } : item));
+      }
+      return row;
+    });
+
+    this.layoutConfig.set(updatedLayoutConfig);
+
+    // Close the Edit Control form
+    if (this.selectedItem()?.id === id) {
+      this.selectedItem.set(null);
+    }
+  }
 
   addRow() {
     this.layoutConfig.update(rows => [...rows, []]);

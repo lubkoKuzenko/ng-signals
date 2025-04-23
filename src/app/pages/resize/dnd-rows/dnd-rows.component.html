@@ -41,7 +41,10 @@
               <app-button [control]="item" />
             }
             @case (ControlTypes.TEXT) {
-              <app-text [control]="item" />
+              <app-text
+                [control]="item"
+                (toggleEditing)="toggleEditing($event.id, $event.value)"
+                (updateText)="updateText($event.value, $event.id)" />
             }
             @default {
               <app-span [control]="item" />
@@ -90,14 +93,13 @@
   [open]="(openDialog$ | async) || false"
   (confirmed)="confirm()"
   (cancelled)="cancel()" />
-<!--
-    <app-source-code-preview
-      [open]="openSourceDialog() || false"
-      [layoutConfig]="layoutConfig()"
-      (closed)="openSourceDialog.set(false)"></app-source-code-preview>
-  
-    <app-result-preview
-      [open]="openViewerDialog() || false"
-      [layoutConfig]="layoutConfig()"
-      (closed)="openViewerDialog.set(false)"></app-result-preview>
-  </div> -->
+
+<app-source-code-preview
+  [open]="openSourceDialog() || false"
+  [layoutConfig]="layoutConfig()"
+  (closed)="openSourceDialog.set(false)"></app-source-code-preview>
+
+<app-result-preview
+  [open]="openViewerDialog() || false"
+  [layoutConfig]="layoutConfig()"
+  (closed)="openViewerDialog.set(false)"></app-result-preview>
