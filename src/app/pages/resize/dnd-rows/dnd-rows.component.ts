@@ -73,72 +73,85 @@ export class DndRowsComponent implements ComponentCanDeactivate {
     return !hasChanges;
   }
 
-  // increaseWidth(e: MouseEvent, id: string, amount: number) {
-  //   e.stopPropagation();
-  //   const foundElementIndex = this.layoutConfig().findIndex(element => element.id === id);
+  increaseWidth(e: MouseEvent, id: string, amount: number) {
+    e.stopPropagation();
+    const rowIndex = 0; // Assuming you want to modify an element in the first row
+    const row = this.layoutConfig()[rowIndex];
+    const foundElementIndex = row?.findIndex(element => element.id === id);
 
-  //   if (foundElementIndex !== -1) {
-  //     const oldElement = this.layoutConfig()[foundElementIndex];
-  //     const newWidth = `${parseInt(oldElement.style.width, 10) + amount}%`;
-  //     const updatedElement = {
-  //       ...oldElement,
-  //       style: {
-  //         ...oldElement.style,
-  //         width: newWidth,
-  //       },
-  //     };
+    if (row && foundElementIndex !== undefined && foundElementIndex !== -1) {
+      const oldElement = row[foundElementIndex];
+      const newWidth = `${parseInt(oldElement.style.width, 10) + amount}%`;
+      const updatedElement = {
+        ...oldElement,
+        style: {
+          ...oldElement.style,
+          width: newWidth,
+        },
+      };
 
-  //     this.layoutConfig.set([
-  //       ...this.layoutConfig().slice(0, foundElementIndex),
-  //       updatedElement,
-  //       ...this.layoutConfig().slice(foundElementIndex + 1),
-  //     ]);
-  //   }
-  // }
+      // Create a new array to trigger the signal update
+      const newLayoutConfig = this.layoutConfig().map((innerArray, index) =>
+        index === rowIndex
+          ? [...innerArray.slice(0, foundElementIndex), updatedElement, ...innerArray.slice(foundElementIndex + 1)]
+          : innerArray,
+      );
 
-  // decreaseWidth(e: MouseEvent, id: string, amount: number): void {
-  //   e.stopPropagation();
-  //   const foundElementIndex = this.layoutConfig().findIndex(element => element.id === id);
+      this.layoutConfig.set(newLayoutConfig);
+    }
+  }
 
-  //   if (foundElementIndex !== -1) {
-  //     const oldElement = this.layoutConfig()[foundElementIndex];
-  //     const newWidth = `${Math.max(0, parseInt(oldElement.style.width, 10) - amount)}%`;
-  //     const updatedElement = {
-  //       ...oldElement,
-  //       style: {
-  //         ...oldElement.style,
-  //         width: newWidth,
-  //       },
-  //     };
+  decreaseWidth(e: MouseEvent, id: string, amount: number): void {
+    e.stopPropagation();
+    const rowIndex = 0; // Assuming you want to modify an element in the first row
+    const row = this.layoutConfig()[rowIndex];
+    const foundElementIndex = row?.findIndex(element => element.id === id);
 
-  //     this.layoutConfig.set([
-  //       ...this.layoutConfig().slice(0, foundElementIndex),
-  //       updatedElement,
-  //       ...this.layoutConfig().slice(foundElementIndex + 1),
-  //     ]);
-  //   }
-  // }
+    if (row && foundElementIndex !== undefined && foundElementIndex !== -1) {
+      const oldElement = row[foundElementIndex];
+      const currentWidth = parseInt(oldElement.style.width, 10);
+      const newWidth = `${Math.max(0, currentWidth - amount)}%`;
+      const updatedElement = {
+        ...oldElement,
+        style: {
+          ...oldElement.style,
+          width: newWidth,
+        },
+      };
 
-  // remove(e: MouseEvent, id: string) {
-  //   e.stopPropagation();
+      const newLayoutConfig = this.layoutConfig().map((innerArray, index) =>
+        index === rowIndex
+          ? [...innerArray.slice(0, foundElementIndex), updatedElement, ...innerArray.slice(foundElementIndex + 1)]
+          : innerArray,
+      );
 
-  //   this.layoutConfig.update(currentConfig => {
-  //     const foundElementIndex = currentConfig.findIndex(item => item.id === id);
+      this.layoutConfig.set(newLayoutConfig);
+    }
+  }
 
-  //     if (foundElementIndex > -1) {
-  //       const newConfig = [...currentConfig.slice(0, foundElementIndex), ...currentConfig.slice(foundElementIndex + 1)];
-  //       return newConfig;
-  //     }
-  //     return currentConfig;
-  //   });
+  remove(e: MouseEvent, id: string) {
+    e.stopPropagation();
+    const rowIndex = 0; // Assuming you want to remove from the first row
 
-  //   this.selectedItem.update(currentSelectedItem => {
-  //     if (currentSelectedItem?.id === id) {
-  //       return null;
-  //     }
-  //     return currentSelectedItem;
-  //   });
-  // }
+    this.layoutConfig.update(currentConfig => {
+      const row = currentConfig[rowIndex];
+      const foundElementIndex = row?.findIndex(item => item.id === id);
+
+      if (row && foundElementIndex !== undefined && foundElementIndex > -1) {
+        const newRow = [...row.slice(0, foundElementIndex), ...row.slice(foundElementIndex + 1)];
+        const newConfig = currentConfig.map((innerArray, index) => (index === rowIndex ? newRow : innerArray));
+        return newConfig;
+      }
+      return currentConfig;
+    });
+
+    this.selectedItem.update(currentSelectedItem => {
+      if (currentSelectedItem?.id === id) {
+        return null;
+      }
+      return currentSelectedItem;
+    });
+  }
 
   onEditControl(item: LayoutItemConfig) {
     if (item.type === ControlTypesEnum.EMPTY) {

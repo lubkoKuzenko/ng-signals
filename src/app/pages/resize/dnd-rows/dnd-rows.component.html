@@ -47,6 +47,20 @@
               <app-span [control]="item" />
             }
           }
+
+          <div class="action-block">
+            <button
+              class="bg-green-500 text-white font-bold px-2 mx-1 rounded"
+              (click)="increaseWidth($event, item.id, 2)">
+              +
+            </button>
+            <button
+              class="bg-red-500 text-white font-bold px-2 mx-1 rounded"
+              (click)="decreaseWidth($event, item.id, 2)">
+              -
+            </button>
+            <button class="font-bold px-1 mx-1 rounded" (click)="remove($event, item.id)">x</button>
+          </div>
         </div>
       </div>
       <div
