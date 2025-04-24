@@ -1,5 +1,5 @@
 import { CdkDrag, CdkDropList, DragDropModule } from '@angular/cdk/drag-drop';
-import { Component, signal } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { controls } from '../controls';
 import { CommonModule } from '@angular/common';
 import { ControlTypesEnum } from '../control-editor/controls.enum';
@@ -11,6 +11,7 @@ import { ControlTypesEnum } from '../control-editor/controls.enum';
   styleUrl: './available-controls.component.scss',
 })
 export class AvailableControlsComponent {
+  @Input() connectedTo: string[] = [];
   controls = signal(controls);
   public ControlTypes = ControlTypesEnum;
 }

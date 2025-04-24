@@ -10,7 +10,7 @@ import { ViewerComponent } from '../viewer/viewer.component';
 })
 export class ResultPreviewComponent {
   @Input() open = false;
-  @Input() layoutConfig: LayoutItemConfig[] = [];
+  @Input() layoutConfig: LayoutItemConfig[][] = [[]];
   @Output() closed = new EventEmitter<boolean>();
 
   constructor() {
