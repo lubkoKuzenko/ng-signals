@@ -4,11 +4,16 @@
   right: 0px;
 }
 
-.drop-area {
-  flex: 1;
-  padding: 2px;
-  min-height: 200px;
-  background-color: #cfcfcf;
+.drop-row {
+  border: 1px dashed #ccc;
+  border-radius: 3px;
+  padding: 8px;
+}
+
+.drop-new-row {
+  border: 1px dashed #ccc;
+  border-radius: 3px;
+  color: #777;
 }
 
 .cdk-drag-animating {

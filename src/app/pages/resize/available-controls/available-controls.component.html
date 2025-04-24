@@ -1,4 +1,4 @@
-<div id="sidebar" cdkDropList [cdkDropListData]="controls()" [cdkDropListConnectedTo]="['dropArea']">
+<div id="sidebar" cdkDropList [cdkDropListData]="controls()" [cdkDropListConnectedTo]="connectedTo">
   @for (control of controls(); track control.name) {
     <div
       cdkDrag
