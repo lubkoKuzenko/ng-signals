@@ -3,6 +3,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ChartComponent } from './pages/chart/chart.component';
 import { SignalStoreComponent } from './pages/signal-store/signal-store.component';
+import { StepNavigationDemoComponent } from './pages/step-navigation-demo/step-navigation-demo.component';
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -32,5 +33,6 @@ export const routes: Routes = [
     loadChildren: () => import('./pages/data-provider/data-provider.routes').then(m => m.dataProviderRoutes),
   },
   { path: 'signal-store', component: SignalStoreComponent },
+  { path: 'step-navigation-demo', component: StepNavigationDemoComponent },
   { path: '**', component: NotFoundComponent },
 ];
