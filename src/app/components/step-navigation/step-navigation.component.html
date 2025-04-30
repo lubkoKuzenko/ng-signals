@@ -1,0 +1,26 @@
+<div class="step-navigation">
+  <div class="step-labels">
+    @for (step of steps; track $index; let $stepIndex = $index) {
+      <div class="step-label" [ngClass]="step.status">
+        <div class="label-text">{{ step.label }}</div>
+        <div class="label-underline" [ngClass]="step.status"></div>
+      </div>
+    }
+  </div>
+
+  <div class="step-boxes">
+    @for (step of steps; track $index; let $stepIndex = $index) {
+      <div
+        class="step-box-wrapper"
+        [ngClass]="[step.status, $stepIndex === 0 ? 'first' : '', $stepIndex === steps.length - 1 ? 'last' : '']">
+        <div
+          class="step-box"
+          [ngClass]="[step.status, $stepIndex === 0 ? 'first' : '', $stepIndex === steps.length - 1 ? 'last' : '']">
+          @if (step.status === 'complete') {
+            <span>✔</span>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

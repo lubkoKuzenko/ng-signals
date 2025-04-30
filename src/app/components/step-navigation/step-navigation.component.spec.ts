@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewerComponent } from './viewer.component';
+import { StepNavigationComponent } from './step-navigation.component';
 
-describe('ViewerComponent', () => {
-  let component: ViewerComponent;
-  let fixture: ComponentFixture<ViewerComponent>;
+describe('StepNavigationComponent', () => {
+  let component: StepNavigationComponent;
+  let fixture: ComponentFixture<StepNavigationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ViewerComponent],
+      imports: [StepNavigationComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ViewerComponent);
+    fixture = TestBed.createComponent(StepNavigationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
