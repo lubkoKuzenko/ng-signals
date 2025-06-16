@@ -9,6 +9,7 @@ export const navigationConfig: NavigationItem[] = [
   { label: 'Chart', routerLink: '/chart' },
   { label: 'Resize', routerLink: '/resize' },
   { label: 'Forms', routerLink: '/forms' },
+  { label: 'Quill', routerLink: '/quill' },
   { label: 'DnD', routerLink: '/dnd' },
   { label: 'Map', routerLink: '/map' },
   { label: 'Calendar', routerLink: '/calendar' },
