@@ -12,6 +12,10 @@ export const routes: Routes = [
     loadChildren: () => import('./pages/forms/forms.routes').then(m => m.formsRoutes),
   },
   {
+    path: 'quill',
+    loadChildren: () => import('./pages/quill/quill.routes').then(m => m.quillRoutes),
+  },
+  {
     path: 'resize',
     loadChildren: () => import('./pages/resize/resize.routes').then(m => m.resizeRoutes),
   },
