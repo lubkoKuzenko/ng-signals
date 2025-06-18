@@ -1,0 +1,64 @@
+::ng-deep .ql-snow.ql-toolbar button,
+::ng-deep .ql-snow .ql-toolbar button {
+  border: 1px solid;
+}
+::ng-deep .ql-toolbar.ql-snow {
+  display: flex;
+}
+
+::ng-deep .ql-toolbar.ql-snow .ql-formats {
+  display: flex;
+  gap: 0.5rem;
+  margin-right: 0px;
+}
+
+::ng-deep .custom-variable {
+  background: #ffe4c2;
+  border-radius: 6px;
+  padding: 2px 8px;
+  color: #374151;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 6px;
+  margin-bottom: 2px;
+  display: inline-block;
+  border: none;
+  box-shadow: none;
+  vertical-align: middle;
+}
+
+.variable-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 14px;
+  height: 32px;
+  background: #f8fafc;
+  border: 1.5px solid #b6d4e7;
+  border-radius: 9999px;
+  color: #3b647a;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background 0.15s, border 0.15s;
+  cursor: pointer;
+  outline: none;
+  box-shadow: none;
+}
+
+.variable-btn:hover, .variable-btn:focus {
+  background: #e6f1fa;
+  border-color: #7cc0e4;
+}
+
+.variable-btn .plus {
+  font-size: 18px;
+  color: #7cc0e4;
+  margin-right: 2px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+
