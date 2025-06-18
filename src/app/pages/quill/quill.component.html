@@ -1,5 +1,11 @@
-<div class="container mx-auto p-4">
-  <div class="bg-white rounded-lg shadow-lg p-4">
-    <div id="editor" style="height: 300px;"></div>
-  </div>
+<div class="mb-2 flex gap-2 flex-wrap">
+  <button (click)="insertVariable('Full Name')" type="button" class="variable-btn"><span class="plus">+</span> Full Name</button>
+  <button (click)="insertVariable('Date')" type="button" class="variable-btn"><span class="plus">+</span> Date</button>
+  <button (click)="insertVariable('Status')" type="button" class="variable-btn"><span class="plus">+</span> Status</button>
+  <button (click)="insertVariable('Expiry Date')" type="button" class="variable-btn"><span class="plus">+</span> Expiry Date</button>
+  <button (click)="insertVariable('Space Type')" type="button" class="variable-btn"><span class="plus">+</span> Space Type</button>
+  <button (click)="insertVariable('Mobility Aids')" type="button" class="variable-btn"><span class="plus">+</span> Mobility Aids</button>
+  <button type="button" class="variable-btn"><span class="plus">+</span></button>
 </div>
+<div id="editor" style="height: 300px;"></div>
+<button (click)="submit()">Send</button>
