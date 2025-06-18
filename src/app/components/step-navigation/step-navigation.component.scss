@@ -1,0 +1,105 @@
+.step-navigation {
+  background-color: #f4f8fb;
+  font-family: sans-serif;
+  padding: 24px;
+}
+
+.step-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.step-label {
+  flex: 1;
+  padding-right: 8px;
+  text-align: center;
+}
+
+.label-text {
+  color: #6b6b6b;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.step-label.complete .label-text {
+  color: #00587a;
+}
+
+.label-underline {
+  background-color: #d1dee5;
+  display: block;
+  height: 4px;
+  width: 100%;
+}
+.label-underline.complete {
+  background-color: #00587a;
+}
+
+.label-underline.current {
+  background-color: #a3ddf5;
+}
+
+.step-boxes {
+  border: 1.5px solid #5e839f;
+  border-radius: 4px;
+  display: flex;
+  height: 43px;
+  overflow: hidden;
+}
+
+.step-box-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+.step-box-wrapper.complete {
+  background: #00587a;
+}
+
+.step-box-wrapper.current {
+  background: #e0f8ff;
+}
+
+.step-box-wrapper.upcoming {
+  background: #d1dee5;
+}
+
+.step-box {
+  align-items: center;
+  display: flex;
+  font-size: 18px;
+  height: 100%;
+  justify-content: center;
+  transform: skew(-24deg);
+  width: 100%;
+}
+
+.step-box:not(.last) {
+  border-right: 1.5px solid #5e839f;
+}
+
+.step-box span {
+  transform: skew(24deg);
+}
+
+.step-box.complete {
+  background: #00587a;
+  color: #ffffff;
+  position: absolute;
+  z-index: 100;
+}
+
+.step-box.current {
+  background: #e0f8ff;
+  color: #00587a;
+  position: absolute;
+  z-index: 100;
+}
+
+.step-box.upcoming {
+  background: #d1dee5;
+  color: #8a9ca9;
+  position: absolute;
+  z-index: 100;
+}

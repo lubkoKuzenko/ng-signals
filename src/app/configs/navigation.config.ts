@@ -15,4 +15,5 @@ export const navigationConfig: NavigationItem[] = [
   { label: 'Calendar', routerLink: '/calendar' },
   { label: 'Data Provider', routerLink: '/data-provider' },
   { label: 'Signal Store', routerLink: '/signal-store' },
+  { label: 'Step Nav Demo', routerLink: '/step-navigation-demo' },
 ];
