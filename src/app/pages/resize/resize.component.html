@@ -28,8 +28,6 @@
           mwlResizable
           (click)="onEditControl(item)"
           [enableGhostResize]="true">
-          <div class="placeholder" [ngStyle]="{ width: item.style.width }" *cdkDragPlaceholder></div>
-
           @switch (item.type) {
             @case (ControlTypes.INPUT) {
               <app-input [control]="item"></app-input>

@@ -1,0 +1,105 @@
+<div class="flex flex-wrap">
+  <app-available-controls-row [layoutConfig]="layoutConfig()" />
+
+  <div class="flex flex-col flex-1">
+    <div class="flex gap-3 align-center justify-center">
+      <button class="py-2 px-4 text-white bg-indigo-600" (click)="openViewerDialog.set(true)">Preview</button>
+      <button class="py-2 px-4 text-white bg-indigo-600" (click)="openSourceDialog.set(true)">Source</button>
+    </div>
+
+    <div class="layout-container">
+      <div
+        *ngFor="let row of layoutConfig(); let i = index"
+        cdkDropList
+        [id]="'row-' + i"
+        [cdkDropListData]="row"
+        [cdkDropListConnectedTo]="getConnectedDropLists(i)"
+        cdkDropListOrientation="mixed"
+        (cdkDropListDropped)="drop($event)"
+        class="layout-row">
+        <div
+          *ngFor="let item of row"
+          cdkDrag
+          [cdkDragData]="item"
+          class="layout-item"
+          class="relative mb-2 p-4 flex items-center flex-wrap"
+          [ngStyle]="{
+            width: item.style.width,
+            border: '1px dotted #ccc',
+            backgroundColor: '#f9f9f9',
+          }"
+          [ngClass]="{ active: item.id === selectedItem()?.id }"
+          (click)="onEditControl(item)">
+          @switch (item.type) {
+            @case (ControlTypes.INPUT) {
+              <app-input [control]="item"></app-input>
+            }
+            @case (ControlTypes.TEXTAREA) {
+              <app-textarea [control]="item"></app-textarea>
+            }
+            @case (ControlTypes.BUTTON) {
+              <app-button [control]="item" />
+            }
+            @case (ControlTypes.TEXT) {
+              <app-text
+                [control]="item"
+                (toggleEditing)="toggleEditing($event.id, $event.value)"
+                (updateText)="updateText($event.value, $event.id)" />
+            }
+            @default {
+              <app-span [control]="item" />
+            }
+          }
+
+          <div class="action-block">
+            <button
+              class="bg-green-500 text-white font-bold px-2 mx-1 rounded"
+              (click)="increaseWidth($event, item.id, 2)">
+              +
+            </button>
+            <button
+              class="bg-red-500 text-white font-bold px-2 mx-1 rounded"
+              (click)="decreaseWidth($event, item.id, 2)">
+              -
+            </button>
+            <button class="font-bold px-1 mx-1 rounded" (click)="remove($event, item.id)">x</button>
+          </div>
+        </div>
+      </div>
+      <div
+        cdkDropList
+        id="new-row-drop-zone"
+        [cdkDropListData]="[]"
+        [cdkDropListConnectedTo]="getAllRowDropListIds()"
+        (cdkDropListDropped)="dropOnNewRow($any($event))"
+        cdkDropListOrientation="mixed"
+        class="new-row-placeholder">
+        Drag here to add a new row
+      </div>
+    </div>
+  </div>
+
+  @if (selectedItem()) {
+    <div id="rightSidebar" class="w-64 p-4 bg-gray-100 border-l">
+      <app-control-editor
+        [selectedItem]="selectedItem"
+        (layoutConfigChange)="onConfigurationChanged($event)"
+        (closed)="selectedItem.set(null)" />
+    </div>
+  }
+</div>
+
+<app-action-confirmation-dialog
+  [open]="(openDialog$ | async) || false"
+  (confirmed)="confirm()"
+  (cancelled)="cancel()" />
+
+<app-source-code-preview
+  [open]="openSourceDialog() || false"
+  [layoutConfig]="layoutConfig()"
+  (closed)="openSourceDialog.set(false)"></app-source-code-preview>
+
+<!-- <app-result-preview
+  [open]="openViewerDialog() || false"
+  [layoutConfig]="layoutConfig()"
+  (closed)="openViewerDialog.set(false)"></app-result-preview> -->
