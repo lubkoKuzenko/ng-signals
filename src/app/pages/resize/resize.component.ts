@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { ResizableModule } from 'angular-resizable-element';
 import {
   CdkDragDrop,
@@ -14,7 +14,6 @@ import * as uuid from 'uuid';
 import { initialLayout } from './default-layout.config';
 import { LayoutItemConfig } from './resize.interface';
 import { ControlEditorComponent } from './control-editor/control-editor.component';
-import { EmptyAreaComponent } from './empty-area/empty-area.component';
 import { AvailableControlsComponent } from './available-controls/available-controls.component';
 import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import { ActionConfirmationDialogComponent } from '../../components/action-confirmation-dialog/action-confirmation-dialog.component';
@@ -42,12 +41,10 @@ import { ResultPreviewComponent } from './result-preview/result-preview.componen
     CdkDrag,
     CdkDragPlaceholder,
     ControlEditorComponent,
-    EmptyAreaComponent,
     ActionConfirmationDialogComponent,
     AvailableControlsComponent,
     SourceCodePreviewComponent,
     ResultPreviewComponent,
-
     SpanComponent,
     TextComponent,
     InputComponent,
@@ -61,7 +58,19 @@ import { ResultPreviewComponent } from './result-preview/result-preview.componen
 export class ResizeComponent implements ComponentCanDeactivate {
   dialog = inject(Dialog);
   pendingChangesService = inject(PendingChangesService);
-  layoutConfig = signal<LayoutItemConfig[]>(initialLayout);
+
+  // 2D array: each entry is one row of controls
+  layoutConfig = signal<LayoutItemConfig[][]>(initialLayout);
+
+  newRowData: LayoutItemConfig[] = [];
+
+  // All CDK drop-list IDs
+  dropListIds = computed(() =>
+    this.layoutConfig()
+      .map((_, i) => `row-${i}`)
+      .concat('new-row'),
+  );
+
   selectedItem = signal<LayoutItemConfig | null>(null);
   openDialog$: Observable<boolean> = this.pendingChangesService.askForConfirmation$;
   public openSourceDialog = signal<boolean>(false);
@@ -77,97 +86,126 @@ export class ResizeComponent implements ComponentCanDeactivate {
 
   increaseWidth(e: MouseEvent, id: string, amount: number) {
     e.stopPropagation();
-    const foundElementIndex = this.layoutConfig().findIndex(element => element.id === id);
 
-    if (foundElementIndex !== -1) {
-      const oldElement = this.layoutConfig()[foundElementIndex];
-      const newWidth = `${parseInt(oldElement.style.width, 10) + amount}%`;
-      const updatedElement = {
-        ...oldElement,
-        style: {
-          ...oldElement.style,
-          width: newWidth,
-        },
-      };
+    this.layoutConfig.update(rs =>
+      rs.map(row =>
+        row.map(item => {
+          if (item.id !== id) return item;
 
-      this.layoutConfig.set([
-        ...this.layoutConfig().slice(0, foundElementIndex),
-        updatedElement,
-        ...this.layoutConfig().slice(foundElementIndex + 1),
-      ]);
-    }
+          // item.style.width is e.g. "20%"
+          const n = parseFloat(item.style.width as string) + amount;
+
+          return {
+            ...item,
+            style: { ...item.style, width: `${n}%` },
+          };
+        }),
+      ),
+    );
   }
 
   decreaseWidth(e: MouseEvent, id: string, amount: number): void {
     e.stopPropagation();
-    const foundElementIndex = this.layoutConfig().findIndex(element => element.id === id);
+    this.layoutConfig.update(rs =>
+      rs.map(row =>
+        row.map(item => {
+          if (item.id !== id) return item;
 
-    if (foundElementIndex !== -1) {
-      const oldElement = this.layoutConfig()[foundElementIndex];
-      const newWidth = `${Math.max(0, parseInt(oldElement.style.width, 10) - amount)}%`;
-      const updatedElement = {
-        ...oldElement,
-        style: {
-          ...oldElement.style,
-          width: newWidth,
-        },
-      };
+          const n = Math.max(0, parseFloat(item.style.width as string) - amount);
 
-      this.layoutConfig.set([
-        ...this.layoutConfig().slice(0, foundElementIndex),
-        updatedElement,
-        ...this.layoutConfig().slice(foundElementIndex + 1),
-      ]);
-    }
+          return {
+            ...item,
+            style: { ...item.style, width: `${n}%` },
+          };
+        }),
+      ),
+    );
   }
 
   remove(e: MouseEvent, id: string) {
     e.stopPropagation();
 
-    this.layoutConfig.update(currentConfig => {
-      const foundElementIndex = currentConfig.findIndex(item => item.id === id);
+    // Update the layout (remove the item)
+    this.layoutConfig.update(rows => rows.map(r => r.filter(c => c.id !== id)).filter(r => r.length > 0));
 
-      if (foundElementIndex > -1) {
-        const newConfig = [...currentConfig.slice(0, foundElementIndex), ...currentConfig.slice(foundElementIndex + 1)];
-        return newConfig;
-      }
-      return currentConfig;
-    });
+    // If that control was open in the editor, close it
+    if (this.selectedItem()?.id === id) {
+      this.selectedItem.set(null);
+    }
+  }
 
-    this.selectedItem.update(currentSelectedItem => {
-      if (currentSelectedItem?.id === id) {
-        return null;
+  // Drop inside existing rows
+  drop(event: CdkDragDrop<LayoutItemConfig[]>, rowIndex: number) {
+    this.layoutConfig.update(cur => {
+      const rows = cur.map(r => [...r]);
+      const fromId = event.previousContainer.id;
+      const toId = event.container.id;
+
+      // same-row reorder
+      if (fromId === toId) {
+        moveItemInArray(rows[rowIndex], event.previousIndex, event.currentIndex);
+
+        // row → row transfer
+      } else if (fromId.startsWith('row-') && toId.startsWith('row-')) {
+        const fromIdx = +fromId.replace('row-', '');
+        const [moved] = rows[fromIdx].splice(event.previousIndex, 1);
+        rows[rowIndex].splice(event.currentIndex, 0, moved);
+
+        // Sidebar with available controls → row
+      } else if (fromId === 'sidebar') {
+        const originalConfig = event.item.data as LayoutItemConfig;
+        const initialName =
+          originalConfig.type === ControlTypesEnum.TEXT
+            ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nisl risus, eleifend vitae congue in, accumsan in nibh.'
+            : originalConfig.name;
+        const newCtrl: LayoutItemConfig = {
+          ...originalConfig,
+          id: uuid.v4(),
+          name: initialName,
+        };
+
+        rows[rowIndex].splice(event.currentIndex, 0, newCtrl);
+
+        // new-row → row
+      } else if (fromId === 'new-row') {
+        const last = rows.length - 1;
+        const [moved] = rows[last].splice(event.previousIndex, 1);
+        rows[rowIndex].splice(event.currentIndex, 0, moved);
       }
-      return currentSelectedItem;
+
+      // Drop any empty rows (e.g. if the only item is removed)
+      return rows.filter(r => r.length > 0);
     });
   }
 
-  drop(event: CdkDragDrop<LayoutItemConfig[]>) {
-    if (event.previousContainer === event.container) {
-      // Reordering inside the same container
-      this.layoutConfig.update((currentConfig: LayoutItemConfig[]) => {
-        const newConfig = [...currentConfig];
-        moveItemInArray(newConfig, event.previousIndex, event.currentIndex);
-        return newConfig;
-      });
-    } else {
-      // Copy item from sidebar to layoutConfig
-      const copiedItem = {
-        ...event.previousContainer.data[event.previousIndex],
-      };
-      this.layoutConfig.update((currentConfig: LayoutItemConfig[]) => [
-        ...currentConfig.slice(0, event.currentIndex),
-        {
-          ...copiedItem,
+  // Drop into the "create a new row" zone
+  onDropToNewRow(event: CdkDragDrop<LayoutItemConfig[]>) {
+    this.layoutConfig.update(cur => {
+      const rows = cur.map(r => [...r]);
+      const fromId = event.previousContainer.id;
+
+      if (fromId.startsWith('row-')) {
+        const fromIdx = +fromId.replace('row-', '');
+        const [moved] = rows[fromIdx].splice(event.previousIndex, 1);
+        rows.push([moved]);
+      } else if (fromId === 'sidebar') {
+        const original = event.item.data as LayoutItemConfig;
+        const initialName =
+          original.type === ControlTypesEnum.TEXT
+            ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nisl risus, eleifend vitae congue in, accumsan in nibh.'
+            : original.name;
+        const newCtrl: LayoutItemConfig = {
+          ...original,
           id: uuid.v4(),
-          name:
-            copiedItem.type === ControlTypesEnum.TEXT
-              ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nisl risus, eleifend vitae congue in, accumsan in nibh.'
-              : copiedItem.name,
-        },
-        ...currentConfig.slice(event.currentIndex),
-      ]);
-    }
+          name: initialName,
+        };
+
+        // Push into its own new row
+        rows.push([newCtrl]);
+      }
+
+      return rows.filter(r => r.length > 0);
+    });
   }
 
   onEditControl(item: LayoutItemConfig) {
@@ -181,26 +219,23 @@ export class ResizeComponent implements ComponentCanDeactivate {
     this.selectedItem.set(item);
   }
 
-  toggleEditing(id: string, value: boolean) {
-    const updated = this.layoutConfig().map(item => (item.id === id ? { ...item, isEditing: value } : item));
-    this.layoutConfig.set(updated);
+  // Flip on/off the inline edit mode
+  toggleEditing(id: string, isEditing: boolean) {
+    this.layoutConfig.update(rows =>
+      rows.map(row => row.map(ctrl => (ctrl.id === id ? { ...ctrl, isEditing } : ctrl))),
+    );
   }
 
-  updateText(value: string, id: string) {
-    const updated = this.layoutConfig().map(item =>
-      item.id === id ? { ...item, name: value, isEditing: false } : item,
+  updateText(newValue: string, id: string) {
+    this.layoutConfig.update(rows =>
+      rows.map(row => row.map(ctrl => (ctrl.id === id ? { ...ctrl, name: newValue, isEditing: false } : ctrl))),
     );
-
-    this.layoutConfig.set(updated);
-
-    // Close the Edit Control form
-    if (this.selectedItem()?.id === id) {
-      this.selectedItem.set(null);
-    }
   }
 
   onConfigurationChanged(newItem: LayoutItemConfig) {
-    this.layoutConfig.set(this.layoutConfig().map(item => (item.id === newItem.id ? newItem : item)));
+    this.layoutConfig.update(rs => rs.map(row => row.map(item => (item.id === newItem.id ? newItem : item))));
+
+    // Close the editor
     this.selectedItem.set(null);
   }
 

@@ -13,14 +13,14 @@ import { CommonModule } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewerComponent implements OnInit {
-  @Input() layoutConfig: LayoutItemConfig[] = [];
+  @Input() layoutConfig: LayoutItemConfig[][] = [];
 
   private fb = inject(FormBuilder);
   private http = inject(HttpClient);
   public myForm: FormGroup = this.fb.group({});
 
   ngOnInit(): void {
-    this.createForm(this.layoutConfig);
+    this.createForm(this.layoutConfig.flat());
   }
 
   createForm(json: LayoutItemConfig[]) {

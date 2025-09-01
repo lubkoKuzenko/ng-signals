@@ -1,57 +1,61 @@
 <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-  <div class="flex flex-wrap">
-    @for (control of layoutConfig; track control.id) {
-      @if (control.type === 'text') {
-        <h3
-          class="relative mb-2 p-4 flex items-center flex-wrap"
-          [ngStyle]="{
-            width: control.style.width,
-          }">
-          {{ control.name }}
-        </h3>
-      }
-
-      @if (['input', 'password', 'email', 'number', 'search', 'tel', 'url'].includes(control.type)) {
-        <div
-          class="relative mb-2 p-4 flex items-center flex-wrap"
-          [ngStyle]="{
-            width: control.style.width,
-          }">
-          @if (control.name !== '') {
-            <label [for]="control.name">{{ control.name }}</label>
+  <div class="flex flex-col">
+    @for (row of layoutConfig; let ri = $index; track ri) {
+      <div class="flex">
+        @for (control of row; track control.id) {
+          @if (control.type === 'text') {
+            <h3
+              class="relative mb-2 p-4 flex items-center flex-wrap"
+              [ngStyle]="{
+                width: control.style.width,
+              }">
+              {{ control.name }}
+            </h3>
           }
-          <input [type]="control.type" [formControlName]="control.name" [id]="control.name" />
-        </div>
-      }
 
-      @if (control.type === 'textarea') {
-        <div
-          class="relative mb-2 p-4 flex items-center flex-wrap"
-          [ngStyle]="{
-            width: control.style.width,
-          }">
-          @if (control.name !== '') {
-            <label [for]="control.name">{{ control.name }}</label>
+          @if (['input', 'password', 'email', 'number', 'search', 'tel', 'url'].includes(control.type)) {
+            <div
+              class="relative mb-2 p-4 flex items-center flex-wrap"
+              [ngStyle]="{
+                width: control.style.width,
+              }">
+              @if (control.name !== '') {
+                <label [for]="control.name">{{ control.name }}</label>
+              }
+              <input [type]="control.type" [formControlName]="control.name" [id]="control.name" />
+            </div>
           }
-          <textarea [formControlName]="control.name"></textarea>
-        </div>
-      }
 
-      @if (control.type === 'button') {
-        <div
-          class="relative mb-2 p-4 flex items-center flex-wrap"
-          [ngStyle]="{
-            width: control.style.width,
-          }">
-          <button class="py-2 px-4 text-white bg-indigo-600">{{ control.name }}</button>
-        </div>
-      }
+          @if (control.type === 'textarea') {
+            <div
+              class="relative mb-2 p-4 flex items-center flex-wrap"
+              [ngStyle]="{
+                width: control.style.width,
+              }">
+              @if (control.name !== '') {
+                <label [for]="control.name">{{ control.name }}</label>
+              }
+              <textarea [formControlName]="control.name"></textarea>
+            </div>
+          }
 
-      @if (myForm.get(control.name)?.invalid && myForm.get(control.name)?.touched) {
-        @if (myForm.get(control.name)?.errors?.['required']) {
-          <bb-validation-message [control]="myForm.get(control.name)!"></bb-validation-message>
+          @if (control.type === 'button') {
+            <div
+              class="relative mb-2 p-4 flex items-center flex-wrap"
+              [ngStyle]="{
+                width: control.style.width,
+              }">
+              <button class="py-2 px-4 text-white bg-indigo-600">{{ control.name }}</button>
+            </div>
+          }
+
+          @if (myForm.get(control.name)?.invalid && myForm.get(control.name)?.touched) {
+            @if (myForm.get(control.name)?.errors?.['required']) {
+              <bb-validation-message [control]="myForm.get(control.name)!"></bb-validation-message>
+            }
+          }
         }
-      }
+      </div>
     }
   </div>
 </form>

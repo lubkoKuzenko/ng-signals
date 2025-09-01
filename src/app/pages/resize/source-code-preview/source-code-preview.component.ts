@@ -10,6 +10,6 @@ import { NgxJsonViewerModule } from 'ngx-json-viewer';
 })
 export class SourceCodePreviewComponent {
   @Input() open = false;
-  @Input() layoutConfig: LayoutItemConfig[] = [];
+  @Input() layoutConfig: LayoutItemConfig[][] = [[]];
   @Output() closed = new EventEmitter<boolean>();
 }

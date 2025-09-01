@@ -1,5 +1,5 @@
 <div class="flex flex-wrap">
-  <app-available-controls />
+  <app-available-controls [connectedTo]="dropListIds()" />
 
   <div class="flex flex-col flex-1">
     <div class="flex gap-3 align-center justify-center">
@@ -7,67 +7,81 @@
       <button class="py-2 px-4 text-white bg-indigo-600" (click)="openSourceDialog.set(true)">Source</button>
     </div>
 
-    <div
-      class="drop-area flex flex-wrap"
-      cdkDropList
-      id="dropArea"
-      [cdkDropListData]="layoutConfig()"
-      [cdkDropListConnectedTo]="[]"
-      cdkDropListOrientation="mixed"
-      (cdkDropListDropped)="drop($event)">
-      @for (item of layoutConfig(); track item.id) {
-        <div
-          cdkDrag
-          class="relative mb-2 p-4 flex items-center flex-wrap"
-          [ngStyle]="{
-            width: item.style.width,
-            border: '1px dotted #ccc',
-            backgroundColor: '#f9f9f9',
-          }"
-          [ngClass]="{ active: item.id === selectedItem()?.id }"
-          mwlResizable
-          (click)="onEditControl(item)"
-          [enableGhostResize]="true">
-          <div class="placeholder" [ngStyle]="{ width: item.style.width }" *cdkDragPlaceholder></div>
+    @for (row of layoutConfig(); track $index) {
+      <div
+        class="drop-row flex gap-1 mb-2"
+        cdkDropList
+        id="row-{{ $index }}"
+        [cdkDropListData]="row"
+        [cdkDropListConnectedTo]="dropListIds()"
+        cdkDropListOrientation="mixed"
+        (cdkDropListDropped)="drop($event, $index)">
+        @for (item of row; track item.id) {
+          <div
+            cdkDrag
+            [cdkDragData]="item"
+            class="relative p-4 flex items-center flex-wrap"
+            [ngStyle]="{
+              width: item.style.width,
+              border: '1px dotted #ccc',
+              backgroundColor: '#f9f9f9',
+            }"
+            [ngClass]="{ active: item.id === selectedItem()?.id }"
+            mwlResizable
+            (click)="onEditControl(item)"
+            [enableGhostResize]="true">
+            <div class="placeholder" [ngStyle]="{ width: item.style.width }" *cdkDragPlaceholder></div>
 
-          @switch (item.type) {
-            @case (ControlTypes.INPUT) {
-              <app-input [control]="item"></app-input>
+            @switch (item.type) {
+              @case (ControlTypes.INPUT) {
+                <app-input [control]="item"></app-input>
+              }
+              @case (ControlTypes.TEXTAREA) {
+                <app-textarea [control]="item"></app-textarea>
+              }
+              @case (ControlTypes.BUTTON) {
+                <app-button [control]="item" />
+              }
+              @case (ControlTypes.TEXT) {
+                <app-text
+                  [control]="item"
+                  (toggleEditing)="toggleEditing($event.id, $event.value)"
+                  (updateText)="updateText($event.value, $event.id)" />
+              }
+              @default {
+                <app-span [control]="item" />
+              }
             }
-            @case (ControlTypes.TEXTAREA) {
-              <app-textarea [control]="item"></app-textarea>
-            }
-            @case (ControlTypes.BUTTON) {
-              <app-button [control]="item" />
-            }
-            @case (ControlTypes.TEXT) {
-              <app-text
-                [control]="item"
-                (toggleEditing)="toggleEditing($event.id, $event.value)"
-                (updateText)="updateText($event.value, $event.id)" />
-            }
-            @default {
-              <app-span [control]="item" />
-            }
-          }
 
-          <div class="action-block">
-            <button
-              class="bg-green-500 text-white font-bold px-2 mx-1 rounded"
-              (click)="increaseWidth($event, item.id, 2)">
-              +
-            </button>
-            <button
-              class="bg-red-500 text-white font-bold px-2 mx-1 rounded"
-              (click)="decreaseWidth($event, item.id, 2)">
-              -
-            </button>
-            <button class="font-bold px-1 mx-1 rounded" (click)="remove($event, item.id)">x</button>
+            <div class="action-block">
+              <button
+                class="bg-green-500 text-white font-bold px-2 mx-1 rounded"
+                (click)="increaseWidth($event, item.id, 2)">
+                +
+              </button>
+              <button
+                class="bg-red-500 text-white font-bold px-2 mx-1 rounded"
+                (click)="decreaseWidth($event, item.id, 2)">
+                -
+              </button>
+              <button class="font-bold px-1 mx-1 rounded" (click)="remove($event, item.id)">x</button>
+            </div>
           </div>
-        </div>
-      } @empty {
-        <app-empty-area />
-      }
+        }
+      </div>
+    }
+
+    <!--  "New row" drop-zone at the bottom  -->
+    <div
+      class="drop-new-row flex items-center justify-start w-full h-12 mb-2"
+      cdkDropList
+      id="new-row"
+      cdkDropListOrientation="horizontal"
+      [cdkDropListData]="newRowData"
+      [cdkDropListConnectedTo]="dropListIds()"
+      (cdkDropListDropped)="onDropToNewRow($event)">
+      <div class="placeholder w-full h-full" *cdkDropListPlaceholder></div>
+      <span class="ml-2">Drop here to create a new row</span>
     </div>
   </div>
 
